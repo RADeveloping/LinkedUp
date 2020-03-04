@@ -9,14 +9,35 @@
     <!----------------------------------------------->
     <script src="scripts/externalLibraries.js"></script>
     <script src="scripts/firebaseAPI.js"></script>
-    <script src="scripts/script.js"></script>
-
     <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
 </head>
 
 <body>
     
+    <div id = "test"></div>
+    <script>
+var user = firebase.auth().currentUser;
+console.log(user);
+
+var name, email, photoUrl, uid, emailVerified;
+
+if (user != null) {
+  name = user.displayName;
+  email = user.email;
+  photoUrl = user.photoURL;
+  emailVerified = user.emailVerified;
+  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                   // this value to authenticate with your backend server, if
+                   // you have one. Use User.getToken() instead.
+
+
+}
+
+
+
+    </script>
 
 </body>
+
 
 </html>

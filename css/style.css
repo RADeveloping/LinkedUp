@@ -1,1 +1,15 @@
-/* EVERYONE'S CSS WILL BE IN HERE. NO INTERNAL/INLINE CSS TO BE USED*/
+/**
+
+// EVERYONE'S CSS WILL BE IN HERE. NO INTERNAL OR INLINE CSS
+// SUGGESTED TO USE THE FOLLOWING FORMAT FOR ID 
+// id = pagename_body  ... id = index_body
+
+// YOU CAN USE THE FOLLOWING SITE TO GET COLORS FROM THE SWEDISH PALET
+// https://flatuicolors.com/palette/se
+*/
+
+#index_body {
+
+    background-color: #d2dae2;
+
+}
