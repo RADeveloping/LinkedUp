@@ -44,14 +44,7 @@ function createMeta(name, content) {
 	document.head.appendChild(metaTag);
 }
 
-function createMetaCharset(){
-    var metaTag = document.createElement('meta');
-    metaTag.charset = "utf-8";
-	document.head.appendChild(metaTag);
-}
 
-
-createMetaCharset();
 
 createMeta("viewport", "width=device-width, initial-scale=1, shrink-to-fit=no");
 createMeta("linkedUp boilerplate code", "LinkedUp");
@@ -71,8 +64,6 @@ includeJS("https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js")
 includeCSSBootStrap("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh");
 includeCSS("https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css");
 includeCSS("css/style.css");
-
-
 
 
 // DO NOT MODIFY THIS FILE //

@@ -1,7 +1,4 @@
- // DO NOT MODIFY THIS FILE //
-
- // Your web app's Firebase configuration
- var firebaseConfig = {
+var firebaseConfig = {
     apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
     authDomain: "techmini-e3a2a.firebaseapp.com",
     databaseURL: "https://techmini-e3a2a.firebaseio.com",
@@ -13,5 +10,3 @@
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// DO NOT MODIFY THIS FILE //

@@ -16,24 +16,25 @@
     
     <div id = "test"></div>
     <script>
-var user = firebase.auth().currentUser;
-console.log(user);
-
-var name, email, photoUrl, uid, emailVerified;
-
-if (user != null) {
-  name = user.displayName;
-  email = user.email;
-  photoUrl = user.photoURL;
-  emailVerified = user.emailVerified;
-  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                   // this value to authenticate with your backend server, if
-                   // you have one. Use User.getToken() instead.
-
-
-}
-
-
+    
+        firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    document.getElementById("test").innerHTML = "<h4> User Logged In: " + displayName + "</h4><br><h5> User Email: " + email + "</h5><br><h6> UID: " + uid + "</h6>";
+    
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+  }
+});
 
     </script>
 
