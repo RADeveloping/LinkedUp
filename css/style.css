@@ -8,8 +8,20 @@
 // https://flatuicolors.com/palette/se
 */
 
+/* INDEX */
 #index_body {
 
     background-color: #d2dae2;
+}
 
+/* LOGIN/SINGUP PAGE */
+
+#firebaseui-auth-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login_body{
+    background-color: #d2dae2;
 }

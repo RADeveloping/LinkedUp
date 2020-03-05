@@ -12,12 +12,13 @@
     <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
 </head>
 
-<body>
+<body id="login_body">
 
 
-    <div id="firebaseui-auth-container"></div>
+    <div id="firebaseui-auth-container" style="position: absolute; top: 25%; left: 35%;"></div>
     <div id="loader">Loading...</div>
-    
+
+
     <script>
         // This login snippet goes at the end of the body tag
         // After firebase libraries via CDN are sourced
@@ -48,11 +49,6 @@
                     //------------------------------------------------------------------------------------------
                     
                     var user = authResult.user;
-
-                    if (user.email.includes("j")) {
-                        console.log("YESSSS");
-                    }
-
                     if (authResult.additionalUserInfo.isNewUser) {
                         db.collection("users").doc(user.uid).set({
                                 name: user.displayName,
