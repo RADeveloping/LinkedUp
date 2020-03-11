@@ -44,8 +44,6 @@ function createMeta(name, content) {
 	document.head.appendChild(metaTag);
 }
 
-
-
 createMeta("viewport", "width=device-width, initial-scale=1, shrink-to-fit=no");
 createMeta("linkedUp boilerplate code", "LinkedUp");
 createMeta("author", "LinkedUp");
@@ -54,16 +52,14 @@ includeJSBootStrap("https://code.jquery.com/jquery-3.4.1.slim.min.js", "sha384-J
 includeJSBootStrap("https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js", "sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo");
 includeJSBootStrap("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js", "sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6");
 
-
-includeJS("https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js");
-includeJS("https://www.gstatic.com/firebasejs/7.9.2/firebase-analytics.js");
-includeJS("https://www.gstatic.com/firebasejs/7.9.2/firebase-auth.js");
-includeJS("https://www.gstatic.com/firebasejs/7.9.2/firebase-firestore.js");
+includeJS("https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js");
+includeJS("https://www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js");
+includeJS("https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js");
+includeJS("https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.jss");
 includeJS("https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js")
 
 includeCSSBootStrap("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh");
 includeCSS("https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css");
 includeCSS("css/style.css");
-
 
 // DO NOT MODIFY THIS FILE //
