@@ -1,22 +1,17 @@
 <!DOCTYPE html>
+
 <head>
     <title>Linked Up - Login</title>
 
-    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
-
-    <!----------------------------------------------->
-    <!------------ EXTERNAL JS FILES   --------------->
-    <!----------------------------------------------->
-    <!--
-        Commented out for testing. 
-
-        <script src="scripts/externalLibraries.js"></script>
-        <script src="scripts/firebaseAPI.js"></script>
-    -->
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
- 
+    <!-- Custom styles for this template -->
+    <link href="css/login/floating-labels.css" rel="stylesheet">
+
 </head>
 
 <body id="login_body">
@@ -32,8 +27,91 @@
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
 
-    <div id="firebaseui-auth-container" style="position: absolute; top: 25%; left: 35%;"></div>
-    <div id="loader">Loading...</div>
+    <form class="form-signin" novalidate>
+        <div class="text-center mb-4">
+            <img class="mb-4" src="images/logo.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Linked Up</h1>
+            <p>Enter you email address and password to login.
+            </p>
+        </div>
+
+
+        <div class="form-group">
+            <label for="validationCustomEmail">Email</label>
+            <div class="input-group mb-1">
+                <input type="email" id="validationCustomEmail" class="form-control mb-1" placeholder="Email" required
+                    pattern="^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(my.bcit)\.ca$"
+                    aria-describedby="emailHelpBlock">
+                <small id="emailHelpBlock" class="form-text text-muted">
+                    To maintain the best user experience for all users, you must use your @my.bcit.ca email.
+                </small>
+                <div class="valid-feedback">
+                    Your email looks great!
+                </div>
+                <div class="invalid-feedback">
+                    Oops! Check that the email you entered matches the format required!
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="validationCustomPassword">Password</label>
+            <div class="input-group mb-1">
+                <input type="password" id="validationCustomPassword" class="form-control mb-1" placeholder="Password"
+                    required minlength="8" maxlength="20" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    aria-describedby="passwordHelpBlock">
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Your password must be 8 - 20 characters long and must contain at least one uppercase letter, one
+                    lowercase letter, and one number.
+                </small>
+                <div class="valid-feedback">
+                    Your password looks great!
+                </div>
+                <div class="invalid-feedback">
+                    Oops! Check that the password you entered matches the format required!
+                </div>
+            </div>
+        </div>
+        <button class="btn mb-1 loginSignUpBtn" style="background-color: #f4623a; color: #fff; width: 100%;"
+            type="submit">Login</button>
+        </form>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('form-signin');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+
+                    form.addEventListener('change', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+
+                var validation = Array.prototype.filter.call(forms, function (form) {
+
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+
+            }, false);
+        })();
+    </script>
+
 
     <script>
         // TODO: Replace the following with your app's Firebase project configuration
@@ -46,11 +124,11 @@
             messagingSenderId: "281432190044",
             appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
         };
-    
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-    </script>    
+    </script>
 
     <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
     <script src="scripts/login.js"></script>

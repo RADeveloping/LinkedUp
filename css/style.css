@@ -25,3 +25,9 @@
 #login_body{
     background-color: #d2dae2;
 }
+
+.loginSignUpBtn{
+    background-color: #f4623a; 
+    color: #fff; 
+    width: 100%;
+}
