@@ -166,6 +166,18 @@
 
   <div id="test"></div>
   <script>
+
+function logout(){
+  firebase.auth().signOut().then(function(){
+    
+    window.location.assign("login.html");
+  })
+ .catch(function (err) {
+   // Handle errors
+ });
+
+}
+
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
@@ -196,7 +208,6 @@
         <a><li>MAIN</li></a>
         <a><li>PROFILE</li></a>
         <a><li>NOTIFICATIONS</li></a>
-
       </ul>
     </div>
   </div>
@@ -210,7 +221,7 @@
 
   </div>
 
-  <button id="but1" class="button" >NO &#10008; </button>
+  <button id="but1" class="button" onclick="logout()" >NO &#10008; </button>
   <button id="but2" class="button">INTERESTED &#10004;	</button>
 
 

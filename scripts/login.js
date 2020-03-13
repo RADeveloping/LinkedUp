@@ -16,50 +16,73 @@
 //--------------------------------------------------------------------
 // JS FOR LOGIN.HTML
 //--------------------------------------------------------------------
-
-function init() {
-
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            //   window.location.assign("main.html");
-        } else {
-            
-        }
-    });
-
-
-}
-
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        db.collection("users").doc(user.uid).set({
+            email: user.email
+        }).then(function() {
+            console.log("New user added to firestore");
+         window.location.assign("main.html");
+        }).catch(function (error) {
+                console.log("Error adding new user: " + error);
+            });
+               
+    }
+  });
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
     'use strict';
     window.addEventListener('load', function () {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('form-signin');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
 
-            form.addEventListener('change', function (event) {
-                if (form[0].checkValidity() === false) {
-                    event.preventDefault();
+        document.getElementById("nextButton").disabled = true;
+
+        let forms = document.getElementsByClassName('form-signin');
+        // Loop over them and prevent submission
+        Array.prototype.filter.call(forms, function (form) {
+
+            form.addEventListener('input', function (event) {
+                if (form[0].checkValidity() === false) { 
                     event.stopPropagation();
-                }
                     form.classList.add('was-validated');
+                    document.getElementById("nextButton").disabled = true;
+                    console.log("LOAD LISTNER");
+
+                }
+
+                if (form[0].checkValidity() === true) {
+                    document.getElementById("nextButton").disabled = false;
+                    document.getElementById("loginButton").disabled = true;
+
+                }
+
+                if (form.checkValidity() === true) {
+                    document.getElementById("loginButton").disabled = false;
+                    document.getElementById("signupButton").disabled = false;
+
+                }else{
+                    document.getElementById("loginButton").disabled = true;
+                    document.getElementById("signupButton").disabled = true;
+
+                }
+
             }, false);
         });
 
-        var validation = Array.prototype.filter.call(forms, function (form) {
+         Array.prototype.filter.call(forms, function (form) {
 
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
                 if (form[0].checkValidity() === false) {
                     event.stopPropagation();
-                    console.log("not all boxes are valid");
-                    
-                } else {
 
+                }
+
+                if(form[0].checkValidity() === true && form[1].checkValidity() === false){
                     console.log("success");
+                    document.getElementById("nextButton").disabled = true;
+                     document.getElementById("nextButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
+
                     checkIfUserExists();
                 }
 
@@ -73,94 +96,70 @@ function init() {
 
 function checkIfUserExists() {
 
-    let email = document.getElementById("validationCustomEmail").value;
-    let password = "TestTest123"
+let email = document.getElementById("validationCustomEmail").value;
+let docID;
 
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+db.collection("users").where("email", "==", email)
+.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        docID = doc.id;
 
-        if (errorCode === "auth/user-not-found") {
-            console.log("Something went wrong : " + errorMessage);
-            userNotFound();
-        } else{
-            userFound();
-
-        }
-
+        userFound();
     });
+    
+})
+.catch(function(error) {
+    console.log("Error getting documents: ", error);
+});
+
+if(!docID){
+    userNotFound();
+}
+
 }
 
 
 function loginUser() {
-    var forms = document.getElementsByClassName('form-signin');
 
-    var validation = Array.prototype.filter.call(forms, function (form) {
+    document.getElementById("loginButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
-        event.preventDefault();
-            if (form.checkValidity() === false) {
-                event.stopPropagation();
-                console.log("not all boxes are valid");
-                
-            } else {
 
-            
-                let email = document.getElementById("validationCustomEmail").value;
-                let password = document.getElementById("validationCustomPassword").value
-                console.log(email);
+    let email = document.getElementById("validationCustomEmail").value;
+    let password = document.getElementById("validationCustomPassword").value
+      
 
-                firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
-                    // user signed in
-            
-            
-                  window.location.assign("main.html");
-            
-            
-                 }).catch(function(error) {     
-                   
-                    console.log("ERRRO" + error.message);
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+        // user signed in
+     }).catch(function(error) {     
+       
+       switch (error.code) {
+           case "auth/user-not-found":
+               userNotFound();
+               break;
+           case "auth/wrong-password":
+               displayIncorrectPassword();
+               break;
+            default:
 
-                   // Handle Errors here.
-                   var errorCode = error.code;
-                   var errorMessage = error.message;
-            
-                   switch (errorCode) {
-                       case "auth/user-not-found":
-                           userNotFound();
-                           break;
-                       case "auth/wrong-password":
-                           clearFormValidationMessages();
-                           displayIncorrectPassword();
-                           break;
-                   }
-                   
-                });
+                document.getElementById("invalidPassword").classList.replace("d-none", "d-block");
+                document.getElementById("invalidPassword").innerHTML = "Oops! " + error.message
+                document.getElementById("loginButton").innerHTML = "Login";
 
-            }
 
-            form.classList.add('was-validated');
-            
+       }
+       
     });
 
-   
-
-
-    function clearFormValidationMessages() {
-
-        var forms = document.getElementsByClassName('form-signin');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
-
-            form.classList.remove('was-validated');
-
-        });
-
-    }
 }
 
 function displayIncorrectPassword() {
-    console.log(document.getElementById("invalidPassword").classList.replace("d-none", "d-block"));
+
+    document.getElementById("invalidPassword").classList.replace("d-none", "d-block");
+    document.getElementById("invalidPassword").innerHTML = "Oops! incorrect password, try again!"
+    document.getElementById("loginButton").innerHTML = "Login";
+    
 }
 
 function userFound() {
@@ -183,56 +182,28 @@ function userNotFound() {
     //document.getElementById("loginButton").classList.add("d-block");
     document.getElementById("passwordGroup").classList.replace("d-none", "block");
     document.getElementById("signupButton").classList.replace("d-none", "block");
+    document.getElementById("signupButton").disabled = true;
+
+
 
 }
 
 function registerUser() {
 
-    var forms = document.getElementsByClassName('form-signin');
+    document.getElementById("signupButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
-    var validation = Array.prototype.filter.call(forms, function (form) {
+    let email = document.getElementById("validationCustomEmail").value;
+    let password = document.getElementById("validationCustomPassword").value;
+    console.log(email + ":" + password);
 
-        event.preventDefault();
-            if (form.checkValidity() === false) {
-                event.stopPropagation();
-                console.log("not all boxes are valid");
-                
-            } else {
-
-            
-                let email = document.getElementById("validationCustomEmail").value;
-                let password = document.getElementById("validationCustomPassword").value;
-            
-
-                firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
-                    // user signed in
-            
-                    db.collection("users").doc(user.uid).set({
-                       email: user.email
-                   }).then(function () {
-                       console.log("New user added to firestore");
-                       window.location.assign("main.html");
-                   }).catch(function (error) {
-                           console.log("Error adding new user: " + error);
-                       });
-
-            
-                 })
-
-            }
-
-            form.classList.add('was-validated');
-            
-    });
-
-
-    
-
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        document.getElementById("invalidPassword").classList.replace("d-none", "d-block");
+                document.getElementById("invalidPassword").innerHTML = "Oops! " + error.message
+                document.getElementById("signupButton").innerHTML = "Register";
+      });
 
 }
-
-
-init();
 
 
 
