@@ -17,15 +17,27 @@
 // JS FOR LOGIN.HTML
 //--------------------------------------------------------------------
 firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+
+    if (user.displayName == null) {
+        // user not fully registred 
+        document.getElementById("validationCustomEmail").value = user.email;
         db.collection("users").doc(user.uid).set({
             email: user.email
         }).then(function() {
             console.log("New user added to firestore");
-         window.location.assign("main.html");
+         window.location.assign("createProfile.html");
         }).catch(function (error) {
                 console.log("Error adding new user: " + error);
             });
+
+    } else {
+        // user fully registred 
+        window.location.assign("main.html");
+
+    }
+
+    if (user) {
+       
                
     }
   });
@@ -97,29 +109,22 @@ firebase.auth().onAuthStateChanged(function(user) {
 function checkIfUserExists() {
 
 let email = document.getElementById("validationCustomEmail").value;
-let docID;
 
 db.collection("users").where("email", "==", email)
 .get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        docID = doc.id;
+           if(querySnapshot.size > 0){
+               userFound();
 
-        userFound();
-    });
-    
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
+           }
+
+    }); 
+    if(querySnapshot.size == 0){
+        userNotFound();        
+    }
 });
-
-if(!docID){
-    userNotFound();
 }
-
-}
-
 
 function loginUser() {
 
@@ -168,7 +173,8 @@ function userFound() {
     document.getElementById("validationCustomEmail").readOnly = true;
     document.getElementById("nextButton").classList.add("d-none");
     document.getElementById("loginButton").classList.add("d-block");
-    document.getElementById("passwordGroup").classList.replace("d-none", "block");
+    document.getElementById("passwordGroup").classList.replace("d-none", "d-block");
+    document.getElementById("signupButton").classList.replace("d-block", "d-done");
 
 
 
@@ -180,8 +186,8 @@ function userNotFound() {
     document.getElementById("validationCustomEmail").readOnly = true;
     document.getElementById("nextButton").classList.add("d-none");
     //document.getElementById("loginButton").classList.add("d-block");
-    document.getElementById("passwordGroup").classList.replace("d-none", "block");
-    document.getElementById("signupButton").classList.replace("d-none", "block");
+    document.getElementById("passwordGroup").classList.replace("d-none", "d-block");
+    document.getElementById("signupButton").classList.replace("d-none", "d-block");
     document.getElementById("signupButton").disabled = true;
 
 
