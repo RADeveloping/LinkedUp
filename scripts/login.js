@@ -17,9 +17,9 @@
 // JS FOR LOGIN.HTML
 //--------------------------------------------------------------------
 firebase.auth().onAuthStateChanged(function(user) {
-
-    if (user.displayName == null) {
+    if (user && user.displayName == null) {
         // user not fully registred 
+        
         document.getElementById("validationCustomEmail").value = user.email;
         db.collection("users").doc(user.uid).set({
             email: user.email
