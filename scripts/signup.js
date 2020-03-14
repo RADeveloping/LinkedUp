@@ -47,6 +47,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             event.preventDefault();
             event.stopPropagation();
             console.log("NOT VALIDATE!")
+            document.getElementById("completeRegistrationButton").disabled = false;
+
 
           }
           form.classList.add('was-validated');
@@ -84,6 +86,9 @@ firebase.auth().onAuthStateChanged(function(user) {
          window.location.assign("main.html");
         }).catch(function (error) {
                 console.log("Error updating user user: " + error);
+                document.getElementById("errorMessage").classList.replace("d-none", "d-block");
+                document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
+                document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
             });
       }).catch(function (error) {
           // An error happened.

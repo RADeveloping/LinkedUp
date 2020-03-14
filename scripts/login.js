@@ -17,9 +17,9 @@
 // JS FOR LOGIN.HTML
 //--------------------------------------------------------------------
 firebase.auth().onAuthStateChanged(function(user) {
-    if (user && user.displayName == null) {
+    if (user){
+    if (user.displayName == null) {
         // user not fully registred 
-        
         document.getElementById("validationCustomEmail").value = user.email;
         db.collection("users").doc(user.uid).set({
             email: user.email
@@ -36,10 +36,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     }
 
-    if (user) {
-       
-               
-    }
+}
+
+
   });
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -196,6 +195,8 @@ function userNotFound() {
 
 function registerUser() {
 
+    document.getElementById("signupButton").disabled = true;
+
     document.getElementById("signupButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
     let email = document.getElementById("validationCustomEmail").value;
@@ -206,6 +207,7 @@ function registerUser() {
       .catch(function (error) {
         document.getElementById("invalidPassword").classList.replace("d-none", "d-block");
                 document.getElementById("invalidPassword").innerHTML = "Oops! " + error.message
+                document.getElementById("signupButton").disabled = false;
                 document.getElementById("signupButton").innerHTML = "Register";
       });
 
