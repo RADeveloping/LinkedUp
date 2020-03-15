@@ -1,5 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+
 <head>
+    <!-- Required meta tags to ensure proper rendering and zooming (mobile first) -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Our own CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
     <title>Linked Up - Messages</title>
 
     <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
@@ -9,14 +22,133 @@
     <!----------------------------------------------->
     <script src="scripts/externalLibraries.js"></script>
     <script src="scripts/firebaseAPI.js"></script>
-
 </head>
 
 <body>
-    
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <a href="index.html" class="navbar-brand">Linked Up</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="login.html" class="nav-item nav-link active">About</a>
+                <a href="#" class="nav-item nav-link">Services</a>
+                <a href="#" class="nav-item nav-link">Contact</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a href="#" class="nav-item nav-link">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <ul class="nav nav-tabs" id="messageNavTabs">
+        <li class="nav-item">
+            <a href="#" class="nav-link active">Inbox</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">Saved</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">Deleted</a>
+        </li>
+    </ul>
+
+    <table class="table table-sm">
+        <tbody id="messageTable">
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Alex</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>Omg...that's amazing!</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Jordan</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed...</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Steph</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>Would you like to get some coffee tomorrow?</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Maria</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>I love that idea! We should work on it together!</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Jon</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>This app is great. I'm so glad I found you on here!</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <figure class="figure">
+                        <img src="images/messagelist/profilepic.jpg" class="figure-img img-fluid rounded"
+                            width="80vw" alt="profilepic">
+                        <figcaption class="figure-caption text-left">Amanda</figcaption>
+                    </figure>
+                </td>
+                <td>
+                    <p>I've been programming since I was 12 and I really enjoy it...</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="messageFooter">
+        You have a new match!
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+    <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
+    <script src="scripts/script.js"></script>
 </body>
-<!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
-<script src="scripts/script.js"></script>
 
 </html>
