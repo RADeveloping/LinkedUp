@@ -31,3 +31,17 @@
     color: #fff; 
     width: 100%;
 }
+
+#messageFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f4623a;
+    color: white;
+    text-align: center;
+}
+
+#messageNavTabs {
+    background-color: #f4623a;
+}
