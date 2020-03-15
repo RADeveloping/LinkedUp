@@ -18,6 +18,7 @@
 //--------------------------------------------------------------------
 document.getElementById("validationCustomEmail").readOnly = true;
 
+
 firebase.auth().onAuthStateChanged(function(user) {
 
     if (user.displayName == null) {
