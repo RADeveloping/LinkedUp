@@ -2,19 +2,71 @@
 <head>
     <title>Linked Up - Message</title>
 
-    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+    <!-- Our own CSS -->
+    <link rel="stylesheet" href="css/messageUser/style.css">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+    
     <!----------------------------------------------->
     <!------------ EXTERNAL JS FILES   --------------->
     <!----------------------------------------------->
     <script src="scripts/externalLibraries.js"></script>
     <script src="scripts/firebaseAPI.js"></script>
-
-    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
 </head>
 
 <body>
-    
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <a href="index.html" class="navbar-brand">Linked Up</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link">About</a>
+                <a href="#" class="nav-item nav-link">Services</a>
+                <a href="#" class="nav-item nav-link">Contact</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a href="#" class="nav-item nav-link">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <ul class="nav nav-tabs" id="messageNavTabs">
+        <li class="nav-item">
+            <a href="messageList.html" class="nav-link">Back</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">Settings</a>
+        </li>
+    </ul>
+
+    <!-- For testing only -->
+    <div class="messageDiv">
+        <img class="profilePic" src="https://via.placeholder.com/100.png/00f">
+        <p class="userName">Bob</p>
+        <p class="userMessage">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...</p>
+        <p class="sentDate">Jan 1, 2000, 12:00am</p>
+    </div>
+
+    <div class="messageDiv">
+        <img class="profilePic" src="https://via.placeholder.com/100.png/f00">
+        <p class="userName">John</p>
+        <p class="userMessage">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...</p>
+        <p class="sentDate">Jan 1, 2000, 12:00am</p>
+    </div>
+
+    <div class="messageDiv">
+        <img class="profilePic" src="https://via.placeholder.com/100.png/00f">
+        <p class="userName">Bob</p>
+        <p class="userMessage">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...</p>
+        <p class="sentDate">Jan 1, 2000, 12:00am</p>
+    </div>
 
 </body>
 <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->

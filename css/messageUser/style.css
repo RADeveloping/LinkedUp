@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.messageDiv {
+    margin: 5px 10vw 5px 10vw;
+    background-color: lightgray;
+    padding: 1vw;
+}
+
+.userName {
+    font-weight: bold;
+}
