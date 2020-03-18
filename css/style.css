@@ -32,16 +32,16 @@
     width: 100%;
 }
 
-#messageFooter {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #f4623a;
-    color: white;
-    text-align: center;
+/* MESSAGE LIST PAGE */
+#messageList_body {
+    padding-top: 90px;
+    font-size: 3vw;
 }
 
-#messageNavTabs {
-    background-color: #f4623a;
+.messageList_user {
+  font-size: 3vw;
+}
+
+.ml_row {
+  padding: 100px;
 }
