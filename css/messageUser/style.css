@@ -8,8 +8,13 @@
     margin: 5px 10vw 5px 10vw;
     background-color: lightgray;
     padding: 1vw;
+    border-radius: 10px;
 }
 
 .userName {
     font-weight: bold;
+}
+
+.profilePic {
+    border-radius: 50%;
 }
