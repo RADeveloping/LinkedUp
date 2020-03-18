@@ -31,17 +31,3 @@
     color: #fff; 
     width: 100%;
 }
-
-/* MESSAGE LIST PAGE */
-#messageList_body {
-    padding-top: 90px;
-    font-size: 3vw;
-}
-
-.messageList_user {
-  font-size: 3vw;
-}
-
-.ml_row {
-  padding: 100px;
-}
