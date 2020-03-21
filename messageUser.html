@@ -60,7 +60,8 @@
 
             <!-- For testing only (temporary) -->
             <div class="messageDiv">
-                <img class="profilePic" src="https://via.placeholder.com/100.png/00f">
+                <img class="pro
+                filePic" src="https://via.placeholder.com/100.png/00f">
                 <p class="userName">Bob</p>
                 <p class="userMessage">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...</p>
                 <p class="sentDate">Jan 1, 2000, 12:00 am</p>
@@ -86,7 +87,7 @@
             <div class="input-group">
                 <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                 <span class="input-group-btn">
-                    <button class="btn btn-warning btn-sm" id="btn-chat">Send</button>
+                    <button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessage()">Send</button>
                 </span>
             </div>
         </div>
@@ -94,6 +95,6 @@
     </body>
 
     <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
-    <script src="scripts/script.js"></script>
+    <script src="scripts/messageUser.js"></script>
 
 </html>
