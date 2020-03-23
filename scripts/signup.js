@@ -65,6 +65,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     }, false);
   })();
 
+  
+
   function saveUserInfo(){
 
     document.getElementById("completeRegistrationButton").disabled = true;
@@ -79,7 +81,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         db.collection("users").doc(user.uid).set({
             firstName : document.getElementById("validationFirstName").value,
             lastName: document.getElementById("validationLastName").value,
-            age: document.getElementById("validationAge").value,
+            dateOfBirth: document.getElementById("validationDateOfBirth").value,
             bio: document.getElementById("bioTextBox").value,
             email: user.email
         }).then(function() {
@@ -97,6 +99,5 @@ firebase.auth().onAuthStateChanged(function(user) {
           document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
           document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
       });
+    }
 
-
-  }

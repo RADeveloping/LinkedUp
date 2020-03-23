@@ -45,6 +45,7 @@ function signUpPressed(){
 }
 
 
+
 // CALL INDEX FUCNTIONS HERE
 addHandlerToLoginButton();
 addHandlerToSignUpButton();

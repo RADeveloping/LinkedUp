@@ -27,19 +27,47 @@
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
 
+       <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
     <div class="container">
     <form class="form-completeRegistration ml-2 mr-2" novalidate>
         <div class="text-center mb-3">
-            <img class="mb-2 img-fluid" src="images/logo.svg" alt="" width="72" height="72">
+            <img class="mb-2 mt-4 img-fluid" src="images/logo.svg" alt="" width="72" height="72">
             <h1 class="h3 mb-1 font-weight-normal">Linked Up</h1>
-            <p>We are almost done! Tell us about yourself to complete your registration!</p>
+            <p>Looks like you need to make some changes to your profile! We can help you with that!</p>
         </div>
 
         <label for="validationCustomEmail">Email</label>
-            <div class="input-group mb-1">
-                <input type="email" id="validationCustomEmail" class="form-control mb-1" placeholder="Email" required
+            <input type="email" id="validationCustomEmail" class="form-control mb-1" placeholder="Email" aria-describedby="emailHelpBlock" required
                     pattern="^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(my.bcit)\.ca$">
-            </div>
+                    <small id="emailHelpBlock" class="form-text text-muted mb-1">
+                        Email cannot be changed. 
+                     </small>
+
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="validationFirstName">First name</label>
@@ -65,17 +93,17 @@
                       </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="validationAge">Age</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="validationAge" placeholder="Age"
-                           min="17" max="100" required>
-                           <div class="valid-feedback">
-                            Perfect!
-                         </div>
-                        <div class="invalid-feedback">
-                           Age must be between 17-100
-                        </div>
+                    <label for="validationDateOfBirth">Date of Birth</label>
+                    <input type="date" class="form-control" id="validationDateOfBirth" placeholder="dd/mm/yyyy" pattern="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$" aria-describedby="dateofbirthHelpBlock" required>
+                    <small id="dateofbirthHelpBlock" class="form-text text-muted">
+                        Ages are visible to other people, not date of birth.
+                    </small>
+                    <div class="valid-feedback">
+                        Date of birth looks great!
                     </div>
+                    <div class="invalid-feedback">
+                        Make sure date of birth is entered using the format dd/mm/yyyy.
+                      </div>
                 </div>
             </div>
 

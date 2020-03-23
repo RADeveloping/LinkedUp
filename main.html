@@ -1,234 +1,153 @@
 <!DOCTYPE html>
-<!--CODE BY ARASH NOBARI-TABRIZI FOR COMP 1800 TEAM 01 -->
 
 <head>
-  <title>LINKED UP</title>
+    <title>Linked Up - Login</title>
 
-  <style>
-    .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: black;
-      color: black;
-      text-align: center;
-      font-family: georgia;
-    }
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    .footer p {
-      color: white;
-      font-size: 13px;
-    }
+    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+    <!-- Custom styles for this template -->
+    <link href="css/login/floating-labels.css" rel="stylesheet">
+    <link href="css/main/style.css" rel="stylesheet">
+    <!-- This is for the age verification -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
 
-    .header {
-      display: block;
-      width: 100%;
-      height: 60px;
-      background-color: black;
-    }
-
-    .inner_div {
-      color:white;
-      font-family: georgia;
-      display: block;
-      height: 100%;
-      width: 1000px;
-      margin: 0 auto;
-      background-color: black;
-    }
-
-    .logo_div {
-
-      float: left;
-      display: table;
-      height: 100%;
-    }
-
-    .logo_div h1{
-      color: white;
-      height: 100%;
-      display: table-cell;
-      vertical-align: middle;
-      font-family: georgia;
-      font-size: 30 px;
-      font-weight: 200;
-    }
-    .logo_div h1 span {
-      font-weight: 800;
-    }
-
-    .nav {
-      float: right;
-      height: 100%;
-    }
-
-    .nav a{
-      float: left;
-      height: 100%;
-      display: table;
-      padding: 0px 20px;
-    }
-
-    .nav a li{
-      display: table-cell;
-      vertical-align: middle;
-    }
-
-    .body {
-      border: thick solid black;
-      display: block;
-      position: absolute;
-      top: 25%;
-      left: 25%;
-      height: 250px;
-      width: 50%;
-    }
-
-    button {
-      display: inline;
-      position: absolute;
-      top: 75%;
-    }
-
-    #but1 {
-      left: 60%;
-      background-color: grey;
-      border: black ;
-      border-radius: 3px;
-      border-style: solid;
-      font-family: georgia;
-      color:rgb(240,128,128);
-      font-weight: 800;
-      font-size: 20px;
-    }
-
-    #but2 {
-      left: 35%;
-      background-color: grey;
-      border: black ;
-      border-radius: 3px;
-      border-style: solid;
-      font-family: georgia;
-      color: green;
-      font-weight: 800;
-      font-size: 20px;
-
-    }
-
-    button:hover{
-    opacity: 0.6;
-    transform: scale(1.5);
-    }
-
-    .body img {
-      height: 200px;
-      width: 150px;
-    }
-
-    .pic {
-      display: block;
-      height: 100%;
-      width: 170px;
-      padding: 5px;
-    }
-
-    .text {
-      float: right;
-      display: block;
-      height: 100%;
-      width: 450px;
-      border-radius: 3px;
-      border: blue;
-      padding: 5px;
-      font-family: Georgia;
-      font-weight: 600;
-      font-style: italic;
-    }
-
-
-
-  </style>
-  <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
-
-  <!----------------------------------------------->
-  <!------------ EXTERNAL JS FILES   --------------->
-  <!----------------------------------------------->
-  <script src="scripts/externalLibraries.js"></script>
-  <script src="scripts/firebaseAPI.js"></script>
-  <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
-
-  <link rel="icon" href="https://p7.hiclipart.com/preview/984/172/28/computer-icons-partnership-favicon-handshake-free-high-quality-partnership-icon.jpg">
 
 </head>
 
-<body>
+<body id="login_body">
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
-  <div id="test"></div>
-  <script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
 
-function logout(){
-  firebase.auth().signOut().then(function(){
-    
-    window.location.assign("login.html");
-  })
- .catch(function (err) {
-   // Handle errors
- });
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js"></script>
 
-}
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
 
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
-        document.getElementById("test").innerHTML = "<h4> User Logged In: " + displayName +
-          "</h4><br><h5> User Email: " + email + "</h5><br><h6> UID: " + uid + "</h6>";
-
-        // ...
-      } else {
-        // User is signed out.
-        // ...
-      }
-    });
-  </script>
-  <!--Header for main page-->
-  <div class="header">
-    <div class="inner_div">
-      <div class="logo_div">
-        <h1>LINKED<span>UP</span></h1>
+     <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
+          </li>
+        </ul>
       </div>
-      <ul class="nav">
-        <a><li>MAIN</li></a>
-        <a><li>PROFILE</li></a>
-        <a><li>NOTIFICATIONS</li></a>
-      </ul>
     </div>
-  </div>
-  <div class="body">
-    <div class="text">
-      <p>This is sample text this is sample textthis is sample textthis is sample textthis is sample textthis is sample textthis is sample textthis is sample text</p>
-    </div>
-    <div class="pic">
-      <img src="https://images.unsplash.com/photo-1523875194681-bedd468c58bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80">
-    </div>
-
-  </div>
-
-  <button id="but1" class="button" onclick="logout()" >NO &#10008; </button>
-  <button id="but2" class="button">INTERESTED &#10004;	</button>
+  </nav>
 
 
-  <!--Footer for main page-->
-  <footer class="footer">
-    <p>&copy; <em>LINKEDUP TEAM 01 - 2020</em></p>
-  </footer>
+    <div class="center">
+
+      <div class="card">
+        <div class="additional">
+          <div class="user-card">
+            <div class="level center" id="age">
+           loading..           
+         </div>
+            <div class="points center" id= "campus">
+              Loading..
+            </div>
+            <img class="rounded-circle center"  width="110" height="110"  src="images/messagelist/user01.jpg" alt="user01">
+          </div>
+          <div class="more-info">
+            <h1 id="firstName">Loading..</h1>
+            <div class="coords">
+              <span>Group Name</span>
+              <span>Joined January 2019</span>
+            </div>
+            <div class="coords">
+              <span>Position/Role</span>
+              <span>City, Country</span>
+            </div>
+            <div class="stats">
+              <div>
+                <div class="title">Awards</div>
+                <i class="fa fa-trophy"></i>
+                <div class="value">2</div>
+              </div>
+              <div>
+                <div class="title">Matches</div>
+                <i class="fa fa-gamepad"></i>
+                <div class="value">27</div>
+              </div>
+              <div>
+                <div class="title">Pals</div>
+                <i class="fa fa-group"></i>
+                <div class="value">123</div>
+              </div>
+              <div>
+                <div class="title">Coffee</div>
+                <i class="fa fa-coffee"></i>
+                <div class="value infinity">∞</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="general">
+          <h1 id = "firstNameHover" >Loading..</h1>
+          <p id="bio">Loading..</p>
+          <span class="more">Mouse over the card for more info</span>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-lg-4 col-sm-4">
+            <button type="button" class="btn btn-success">INTERESTED</button>
+          </div>
+          <div class="col-lg-auto col-sm-3">
+          </div>
+          <div class="col col-lg-4 col-sm-4">
+            <button type="button" class="btn btn-danger">NOT INTERESTED</button>
+          </div>
+        </div>
+
+
+
+  <script>
+    // TODO: Replace the following with your app's Firebase project configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
+        authDomain: "techmini-e3a2a.firebaseapp.com",
+        databaseURL: "https://techmini-e3a2a.firebaseio.com",
+        projectId: "techmini-e3a2a",
+        storageBucket: "techmini-e3a2a.appspot.com",
+        messagingSenderId: "281432190044",
+        appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+</script>
+
+<!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
+<script src="scripts/main.js"></script>
+</body>
+
+</html>
+
 </body>
 
 
