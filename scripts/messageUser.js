@@ -1,7 +1,5 @@
-let userId = firebase.UserInfo.uid;
-let userCollection = db.collection("users").doc(userId);
-
-const month = 
+// Constants
+const MONTH = 
     ["January", "February", 
     "March", "April", 
     "May", "June", 
@@ -9,43 +7,65 @@ const month =
     "September", "October", 
     "November", "December"];
 
-function sendMessage() {
-    let message = document.getElementById("btn-input").value;
+// Global Variables
+let elements;
 
-    createMessageDiv(message);
+function sendMessage() {
+    debugger;
+    createMessageDiv();
+    setElementAttributes();
+    setElementValues();
+    appendElements();
 }
 
-function createMessageDiv(message) {
-    let allMessages = document.getElementById("allMessages");
-    let today = new Date();
+function createMessageDiv() {
+    elements = [
+        document.createElement("img"),
+        document.createElement("p"),
+        document.createElement("p"),
+        document.createElement("p"),
+        document.createElement("div"),
+        document.getElementById("allMessages")
+    ]
+}
 
-    let messageDiv = document.createElement("div");
-    messageDiv.setAttribute("class", "messageDiv");
-    
-    let profilePic = document.createElement("img");
-    profilePic.setAttribute("class", "profilePic");
-    //profilePic.src = "https://via.placeholder.com/100.png/f00";
+function setElementAttributes() {
+    elements[0].setAttribute("class", "profilePic");
+    elements[1].setAttribute("class", "userName");
+    elements[2].setAttribute("class", "userMessage");
+    elements[3].setAttribute("class", "sentDate")
+    elements[4].setAttribute("class", "messageDiv");
+}
 
-    let userName = document.createElement("p");
-    userName.setAttribute("class", "userName");
-    //userName.innerHTML = "Bob";
+function setElementValues() {
+    let user = firebase.auth().currentUser;
 
-    let userMessage = document.createElement("p");
-    userMessage.setAttribute("class", "userMessage");
-    //userMessage.innerHTML = message;
+    if (user != null) {
+        let userName = user.displayName;
+        let userPic = user.photoURL;
+        let message = document.getElementById("btn-input").value;
+        let today = new Date();
 
-    let sentDate = document.createElement("p");
-    sentDate.setAttribute("class", "sentDate");
-    sentDate.innerHTML = 
-        month[today.getMonth()] + " " 
-        + today.getDate() + ", " 
-        + today.getFullYear() + ", " 
-        + today.getHours() + ":" 
-        + today.getMinutes();
+        //----------------------------------------
 
-    messageDiv.appendChild(profilePic);
-    messageDiv.appendChild(userName);
-    messageDiv.appendChild(userMessage);
-    messageDiv.appendChild(sentDate);
-    allMessages.appendChild(messageDiv);
+        elements[0].src = userPic;
+        elements[1].innerHTML = userName;
+        elements[2].innerHTML = message;
+        elements[3].innerHTML = 
+            MONTH[today.getMonth()] + " " 
+            + today.getDate() + ", " 
+            + today.getFullYear() + ", " 
+            + today.getHours() + ":" 
+            + today.getMinutes();
+    } else {
+        console.log("Not logged in");
+    }
+}
+
+function appendElements() {
+    elements[4].appendChild(elements[0]);
+    elements[4].appendChild(elements[1]);
+    elements[4].appendChild(elements[2]);
+    elements[4].appendChild(elements[3]);
+    elements[5].appendChild(elements[4]);
 }
