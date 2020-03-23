@@ -32,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     let lastName = document.getElementById("validationLastName")
  
-    let age = document.getElementById("validationAge")
+    let dateOfBirth = document.getElementById("validationDateOfBirth")
  
     let bio =  document.getElementById("bioTextBox")
  
@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       
       firstName.value = doc.data().firstName;
       lastName.value = doc.data().lastName;
-      age.value = doc.data().age;
+      validationDateOfBirth.value = doc.data().dateOfBirth;
       bio.value = doc.data().bio;
       email.value= user.email;
 
@@ -107,7 +107,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         db.collection("users").doc(user.uid).set({
             firstName : document.getElementById("validationFirstName").value,
             lastName: document.getElementById("validationLastName").value,
-            age: document.getElementById("validationAge").value,
+            dateOfBirth: document.getElementById("validationDateOfBirth").value,
             bio: document.getElementById("bioTextBox").value,
             email: user.email
         }).then(function() {

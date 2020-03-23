@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--CODE BY ARASH NOBARI-TABRIZI FOR COMP 1800 TEAM 01 -->
+
+<head>
+  <title>LINKED UP</title>
+
+  <style>
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: black;
+      color: black;
+      text-align: center;
+      font-family: georgia;
+    }
+
+    .footer p {
+      color: white;
+      font-size: 13px;
+    }
+
+    .header {
+      display: block;
+      width: 100%;
+      height: 60px;
+      background-color: black;
+    }
+
+    .inner_div {
+      color:white;
+      font-family: georgia;
+      display: block;
+      height: 100%;
+      width: 1000px;
+      margin: 0 auto;
+      background-color: black;
+    }
+
+    .logo_div {
+
+      float: left;
+      display: table;
+      height: 100%;
+    }
+
+    .logo_div h1{
+      color: white;
+      height: 100%;
+      display: table-cell;
+      vertical-align: middle;
+      font-family: georgia;
+      font-size: 30 px;
+      font-weight: 200;
+    }
+    .logo_div h1 span {
+      font-weight: 800;
+    }
+
+    .nav {
+      float: right;
+      height: 100%;
+    }
+
+    .nav a{
+      float: left;
+      height: 100%;
+      display: table;
+      padding: 0px 20px;
+    }
+
+    .nav a li{
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .body {
+      border: thick solid black;
+      display: block;
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      height: 250px;
+      width: 50%;
+    }
+
+    button {
+      display: inline;
+      position: absolute;
+      top: 75%;
+    }
+
+    #but1 {
+      left: 60%;
+      background-color: grey;
+      border: black ;
+      border-radius: 3px;
+      border-style: solid;
+      font-family: georgia;
+      color:rgb(240,128,128);
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    #but2 {
+      left: 35%;
+      background-color: grey;
+      border: black ;
+      border-radius: 3px;
+      border-style: solid;
+      font-family: georgia;
+      color: green;
+      font-weight: 800;
+      font-size: 20px;
+
+    }
+
+    button:hover{
+    opacity: 0.6;
+    transform: scale(1.5);
+    }
+
+    .body img {
+      height: 200px;
+      width: 150px;
+    }
+
+    .pic {
+      display: block;
+      height: 100%;
+      width: 170px;
+      padding: 5px;
+    }
+
+    .text {
+      float: right;
+      display: block;
+      height: 100%;
+      width: 450px;
+      border-radius: 3px;
+      border: blue;
+      padding: 5px;
+      font-family: Georgia;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+
+
+  </style>
+  <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+
+  <!----------------------------------------------->
+  <!------------ EXTERNAL JS FILES   --------------->
+  <!----------------------------------------------->
+  <script src="scripts/externalLibraries.js"></script>
+  <script src="scripts/firebaseAPI.js"></script>
+  <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+
+  <link rel="icon" href="https://p7.hiclipart.com/preview/984/172/28/computer-icons-partnership-favicon-handshake-free-high-quality-partnership-icon.jpg">
+
+</head>
+
+<body>
+
+  <div id="test"></div>
+  <script>
+
+function logout(){
+  firebase.auth().signOut().then(function(){
+    
+    window.location.assign("login.html");
+  })
+ .catch(function (err) {
+   // Handle errors
+ });
+
+}
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        document.getElementById("test").innerHTML = "<h4> User Logged In: " + displayName +
+          "</h4><br><h5> User Email: " + email + "</h5><br><h6> UID: " + uid + "</h6>";
+
+        // ...
+      } else {
+        // User is signed out.
+        // ...
+      }
+    });
+  </script>
+  <!--Header for main page-->
+  <div class="header">
+    <div class="inner_div">
+      <div class="logo_div">
+        <h1>LINKED<span>UP</span></h1>
+      </div>
+      <ul class="nav">
+        <a><li>MAIN</li></a>
+        <a><li>PROFILE</li></a>
+        <a><li>NOTIFICATIONS</li></a>
+      </ul>
+    </div>
+  </div>
+  <div class="body">
+    <div class="text">
+      <p>This is sample text this is sample textthis is sample textthis is sample textthis is sample textthis is sample textthis is sample textthis is sample text</p>
+    </div>
+    <div class="pic">
+      <img src="https://images.unsplash.com/photo-1523875194681-bedd468c58bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80">
+    </div>
+
+  </div>
+
+  <button id="but1" class="button" onclick="logout()" >NO &#10008; </button>
+  <button id="but2" class="button">INTERESTED &#10004;	</button>
+
+
+  <!--Footer for main page-->
+  <footer class="footer">
+    <p>&copy; <em>LINKEDUP TEAM 01 - 2020</em></p>
+  </footer>
+</body>
+
+
+</html>

@@ -11,6 +11,8 @@
     <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
     <!-- Custom styles for this template -->
     <link href="css/login/floating-labels.css" rel="stylesheet">
+    <!-- For age validation-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
 
 </head>
 
@@ -27,6 +29,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
 
+    
     <div class="container">
     <form class="form-completeRegistration ml-2 mr-2" novalidate>
         <div class="text-center mb-3">
@@ -65,17 +68,17 @@
                       </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="validationAge">Age</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="validationAge" placeholder="Age"
-                           min="17" max="100" required>
-                           <div class="valid-feedback">
-                            Perfect!
-                         </div>
-                        <div class="invalid-feedback">
-                           Age must be between 17-100
-                        </div>
+                    <label for="validationDateOfBirth">Date of Birth</label>
+                    <input type="date" class="form-control" id="validationDateOfBirth" placeholder="dd/mm/yyyy" pattern="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$" aria-describedby="dateofbirthHelpBlock" required>
+                    <small id="dateofbirthHelpBlock" class="form-text text-muted">
+                        Ages are visible to other people, not date of birth.
+                    </small>
+                    <div class="valid-feedback">
+                        Date of birth looks great!
                     </div>
+                    <div class="invalid-feedback">
+                        Make sure date of birth is entered using the format dd/mm/yyyy.
+                      </div>
                 </div>
             </div>
 
