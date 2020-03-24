@@ -1,6 +1,6 @@
 //----------------------//
 // Constants            //
-//--------------------=--//
+//-----------------------//
 const MONTH = 
     ["January", "February", 
     "March", "April", 
@@ -13,6 +13,7 @@ const MONTH =
 // Global Variables     //
 //----------------------//
 let elements;
+let docID;
 
 //----------------------//
 // Button Event         //
@@ -32,7 +33,7 @@ function sendMessage() {
 }
 
 //----------------------//
-// HTML DOM Constants   //
+// HTML DOM Methods     //
 //----------------------//
 function createMessageDiv() {
     elements = [
@@ -80,27 +81,38 @@ function appendElements() {
     elements[5].appendChild(elements[4]);
 }
 
-// Firebase Cloud Firestore Functions
+//----------------------//
+// Firebase             //
+// Cloud Firestore      //
+// Functions            //
+//----------------------//
 function updateChats(user) {
-    let docID;
     let chatRef = db.collection("chats");
 
-    db.collection("chats").add({
-        user1ID : user.uid,
-        user2ID : "user2ID"
-    })
-    .then(function (docRef) {
-        docID = docRef.id;
+    if (docID == null) {
+        db.collection("chats").add({
+            user1ID : user.uid,
+            user2ID : "user2ID"
+        })
+        .then(function (docRef) {
+            docID = docRef.id;
 
-        chatRef.doc(docID).collection("messages").doc("0").set({
+            chatRef.doc(docID).collection("messages").add({
+                from : user.uid,
+                message : elements[2].innerHTML,
+                time : firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .catch(function(error) {
+            console.log("Error adding document: " + error)
+        });
+    } else {
+        chatRef.doc(docID).collection("messages").add({
             from : user.uid,
             message : elements[2].innerHTML,
             time : firebase.firestore.FieldValue.serverTimestamp()
         });
-    })
-    .catch(function(error) {
-        console.log("Error adding document: " + error)
-    });
+    }
 
     updateUser(user);
 }
