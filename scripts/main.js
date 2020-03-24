@@ -90,10 +90,10 @@ firebase.auth().onAuthStateChanged(function(user) {
                     // doc.data() is never undefined for query doc snapshots
                     console.log(doc.id, " => ", doc.data());
                     usersArray.push(doc.id);
-                    docID = doc.id;
+
                 });
 
-                getNextUserProfile(docID);
+                getNextUserProfile(usersArray.pop());
 
             })
             .catch(function(error) {
