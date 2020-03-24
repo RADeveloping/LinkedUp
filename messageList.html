@@ -1,139 +1,150 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
 
 <head>
-  <title>Linked Up - Messages</title>
+    <title>Linked Up - Messages</title>
 
-  <!-- Required meta tags to ensure proper rendering and zooming (mobile first) -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!----------------------------------------------->
+    <!--  Meta tag for rendering on mobile devices -->
+    <!----------------------------------------------->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Helping professional students connect!">
+    <meta name="author" content="Linked Up">
 
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet"
-    type="text/css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'
-    rel='stylesheet' type='text/css'>
+    <!----------------------------------------------->
+    <!--  EXTERNAL CSS AND JS -->
+    <!----------------------------------------------->
 
-  <!-- Plugin CSS -->
-  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-  <!-- Theme CSS - Includes Bootstrap -->
-  <link href="css/landing/creative.min.css" rel="stylesheet">
-  <!-- Our own CSS -->
-  <link rel="stylesheet" href="css/messageList/style.css">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- External js files -->
-  <script src="scripts/externalLibraries.js"></script>
-  <script src="scripts/firebaseAPI.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+
+    <!----------------------------------------------->
+    <!--  INTERNAL CSS AND JS -->
+    <!----------------------------------------------->
+    <link href="css/landing/creative.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/messageList/style.css">
+
 </head>
 
-<body id="messageList_body">
+<body>
 
-    <!-- Navigation -->
+    <!----------------------------------------------->
+    <!--  LOAD FIREBASE JS -->
+    <!----------------------------------------------->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
+
+    <!----------------------------------------------->
+    <!--  NAVIGATION  -->
+    <!----------------------------------------------->
+
     <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-          data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-          aria-label="Toggle navigation">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto my-2 my-lg-0">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
-            </li>
-          </ul>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
-  
-  <!-- Message list -->
 
-  <div class="container">
 
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user01.jpg" alt="user01">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User01</h2>
-        <p>Omg...that's amazing!</p>
-      </div>
+    <!----------------------------------------------->
+    <!--  MAIN CONTAINER CONTAINER -->
+    <!----------------------------------------------->
+
+    <div class="container">
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user01.jpg" alt="user01">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User01</h2>
+                <p>Omg...that's amazing!</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user02.jpg" alt="user02">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User02</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed...</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user03.jpg" alt="user03">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User03</h2>
+                <p>Would you like to get some coffee tomorrow?</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user04.jpg" alt="user04">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User04</h2>
+                <p>I love that idea! We should work on it together!</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user05.jpg" alt="user05">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User05</h2>
+                <p>This app is great. I'm so glad I found you on here!</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-1">
+            <div class="col-3">
+                <img class="img-fluid rounded-circle" src="images/messagelist/user06.jpg" alt="user06">
+            </div>
+            <div class="col">
+                <h2 class="messageList_user">User06</h2>
+                <p>I've been programming since I was 12 and I really enjoy it...</p>
+            </div>
+        </div>
+
     </div>
-    
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user02.jpg" alt="user02">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User02</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed...</p>
-      </div>
-    </div>
 
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user03.jpg" alt="user03">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User03</h2>
-        <p>Would you like to get some coffee tomorrow?</p>
-      </div>
-    </div>
+    <!----------------------------------------------->
+    <!--  LOAD INTERNAL JS AFTER BODY LOADS  -->
+    <!----------------------------------------------->
 
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user04.jpg" alt="user04">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User04</h2>
-        <p>I love that idea! We should work on it together!</p>
-      </div>
-    </div>
+    <script src="scripts/messagelist.js"></script>
 
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user05.jpg" alt="user05">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User05</h2>
-        <p>This app is great. I'm so glad I found you on here!</p>
-      </div>
-    </div>
-
-    <div class="row align-items-center py-1">
-      <div class="col-3">
-        <img class="img-fluid rounded-circle" src="images/messagelist/user06.jpg" alt="user06">
-      </div>
-      <div class="col">
-        <h2 class="messageList_user">User06</h2>
-        <p>I've been programming since I was 12 and I really enjoy it...</p>
-      </div>
-    </div>
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
-
-  <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
-  <script src="scripts/script.js"></script>
 </body>
 
 </html>
