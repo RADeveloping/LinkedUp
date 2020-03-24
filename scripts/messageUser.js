@@ -1,4 +1,6 @@
-// Constants
+//----------------------//
+// Constants            //
+//--------------------=--//
 const MONTH = 
     ["January", "February", 
     "March", "April", 
@@ -7,10 +9,14 @@ const MONTH =
     "September", "October", 
     "November", "December"];
 
-// Global Variables
+//----------------------//
+// Global Variables     //
+//----------------------//
 let elements;
 
-// 
+//----------------------//
+// Button Event         //
+//----------------------//
 function sendMessage() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -25,7 +31,9 @@ function sendMessage() {
     }) 
 }
 
-// HTML DOM Functions
+//----------------------//
+// HTML DOM Constants   //
+//----------------------//
 function createMessageDiv() {
     elements = [
         document.createElement("img"),
@@ -98,5 +106,5 @@ function updateChats(user) {
 }
 
 function updateUser(user) {
-
+    
 }
