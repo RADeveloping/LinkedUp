@@ -11,11 +11,16 @@ const MONTH =
 let elements;
 
 function sendMessage() {
-    debugger;
-    createMessageDiv();
-    setElementAttributes();
-    setElementValues();
-    appendElements();
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            createMessageDiv();
+            setElementAttributes();
+            setElementValues(user);
+            appendElements();
+        } else {
+            alert("You're not logged in!");
+        }
+    }) 
 }
 
 function createMessageDiv() {
@@ -37,29 +42,23 @@ function setElementAttributes() {
     elements[4].setAttribute("class", "messageDiv");
 }
 
-function setElementValues() {
-    let user = firebase.auth().currentUser;
+function setElementValues(user) {
+    let userName = user.displayName;
+    let userPic = user.photoURL;
+    let message = document.getElementById("btn-input").value;
+    let today = new Date();
 
-    if (user != null) {
-        let userName = user.displayName;
-        let userPic = user.photoURL;
-        let message = document.getElementById("btn-input").value;
-        let today = new Date();
+    //----------------------------------------
 
-        //----------------------------------------
-
-        elements[0].src = userPic;
-        elements[1].innerHTML = userName;
-        elements[2].innerHTML = message;
-        elements[3].innerHTML = 
-            MONTH[today.getMonth()] + " " 
-            + today.getDate() + ", " 
-            + today.getFullYear() + ", " 
-            + today.getHours() + ":" 
-            + today.getMinutes();
-    } else {
-        console.log("Not logged in");
-    }
+    elements[0].src = userPic;
+    elements[1].innerHTML = userName;
+    elements[2].innerHTML = message;
+    elements[3].innerHTML = 
+        MONTH[today.getMonth()] + " " 
+        + today.getDate() + ", " 
+        + today.getFullYear() + ", " 
+        + today.getHours() + ":" 
+        + today.getMinutes();
 }
 
 function appendElements() {
