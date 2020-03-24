@@ -1,5 +1,5 @@
 /**
- * @desc add onlclik to navbar buttons
+ * @desc add onClick to navbar buttons
  */
 
 function init() {
@@ -43,7 +43,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 document.getElementById("firstName").innerText = doc.data().firstName;
                 document.getElementById("firstNameHover").innerText = doc.data().firstName;;
                 document.getElementById("bio").innerText = doc.data().bio;
-                document.getElementById("age").innerText = "AGE | " + convertDobToAge(doc.data().dateOfBirth);
+                document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
                 document.getElementById("campus").innerText = "BCIT | BURNABY";
             } else {
                 // doc.data() will be undefined in this case
@@ -56,12 +56,16 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 /**
- * @desc converting date of birth to the users age.
- * @returns int containing users age.
+ * @desc calculate a users age based on their dob.
+ * @param dob the date of birth of the user.
+ * @returns int the age of the user.
  */
+function calculateAge(dob) {
+    var dobSplit = dob.split("/");
 
-function convertDobToAge(date) {
-
-    return moment().diff(date, 'years', false);
+    var now = new Date(2020, 03, 24);
+    var dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
+    console.log(((now - dob) / 86400000) / 365);
+    return Math.trunc(((now - dob) / 86400000) / 365);
 
 }
