@@ -3,23 +3,35 @@
 <head>
     <title>Linked Up - Login</title>
 
+    <!----------------------------------------------->
+    <!--  Meta tag for rendering on mobile devices -->
+    <!----------------------------------------------->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Helping professional students connect!">
+    <meta name="author" content="Linked Up">
+
+    <!----------------------------------------------->
+    <!--  EXTERNAL CSS AND JS -->
+    <!----------------------------------------------->
+
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
-    <!-- Custom styles for this template -->
-    <link href="css/login/floating-labels.css" rel="stylesheet">
-    <link href="css/main/style.css" rel="stylesheet">
-    <!-- This is for the age verification -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
 
+    <!----------------------------------------------->
+    <!--  INTERNAL CSS AND JS -->
+    <!----------------------------------------------->
+
+    <link href="css/login/floating-labels.css" rel="stylesheet">
 
 </head>
 
-<body id="login_body">
-    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+<body>
+    <!----------------------------------------------->
+    <!--  LOAD FIREBASE JS -->
+    <!----------------------------------------------->
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
@@ -31,124 +43,132 @@
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
 
-     <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-        aria-label="Toggle navigation">
+
+    <!----------------------------------------------->
+    <!--  NAVIGATION BAR -->
+    <!----------------------------------------------->
+
+    <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="messagelist.html">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+
+    <!----------------------------------------------->
+    <!--  MAIN USER CARD SECTION -->
+    <!----------------------------------------------->
 
     <div class="center">
 
-      <div class="card">
-        <div class="additional">
-          <div class="user-card">
-            <div class="level center" id="age">
-           loading..           
-         </div>
-            <div class="points center" id= "campus">
-              Loading..
+        <div class="card">
+            <div class="additional">
+                <div class="user-card">
+                    <div class="level center" id="age">
+                        loading..
+                    </div>
+                    <div class="points center" id="campus">
+                        Loading..
+                    </div>
+                    <img class="rounded-circle center" width="110" height="110" src="images/messagelist/user01.jpg" alt="user01">
+                </div>
+                <div class="more-info">
+                    <h1 id="firstName">Loading..</h1>
+                    <div class="coords">
+                        <span>Group Name</span>
+                        <span>Joined January 2019</span>
+                    </div>
+                    <div class="coords">
+                        <span>Position/Role</span>
+                        <span>City, Country</span>
+                    </div>
+                    <div class="stats">
+                        <div>
+                            <div class="title">Awards</div>
+                            <i class="fa fa-trophy"></i>
+                            <div class="value">2</div>
+                        </div>
+                        <div>
+                            <div class="title">Matches</div>
+                            <i class="fa fa-gamepad"></i>
+                            <div class="value">27</div>
+                        </div>
+                        <div>
+                            <div class="title">Pals</div>
+                            <i class="fa fa-group"></i>
+                            <div class="value">123</div>
+                        </div>
+                        <div>
+                            <div class="title">Coffee</div>
+                            <i class="fa fa-coffee"></i>
+                            <div class="value infinity">∞</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <img class="rounded-circle center"  width="110" height="110"  src="images/messagelist/user01.jpg" alt="user01">
-          </div>
-          <div class="more-info">
-            <h1 id="firstName">Loading..</h1>
-            <div class="coords">
-              <span>Group Name</span>
-              <span>Joined January 2019</span>
+            <div class="general">
+                <h1 id="firstNameHover">Loading..</h1>
+                <p id="bio">Loading..</p>
+                <span class="more">Mouse over the card for more info</span>
             </div>
-            <div class="coords">
-              <span>Position/Role</span>
-              <span>City, Country</span>
-            </div>
-            <div class="stats">
-              <div>
-                <div class="title">Awards</div>
-                <i class="fa fa-trophy"></i>
-                <div class="value">2</div>
-              </div>
-              <div>
-                <div class="title">Matches</div>
-                <i class="fa fa-gamepad"></i>
-                <div class="value">27</div>
-              </div>
-              <div>
-                <div class="title">Pals</div>
-                <i class="fa fa-group"></i>
-                <div class="value">123</div>
-              </div>
-              <div>
-                <div class="title">Coffee</div>
-                <i class="fa fa-coffee"></i>
-                <div class="value infinity">∞</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="general">
-          <h1 id = "firstNameHover" >Loading..</h1>
-          <p id="bio">Loading..</p>
-          <span class="more">Mouse over the card for more info</span>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-lg-4 col-sm-4">
-            <button type="button" class="btn btn-success">INTERESTED</button>
-          </div>
-          <div class="col-lg-auto col-sm-3">
-          </div>
-          <div class="col col-lg-4 col-sm-4">
-            <button type="button" class="btn btn-danger">NOT INTERESTED</button>
-          </div>
         </div>
 
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 col-sm-4">
+                    <button type="button" class="btn btn-success">INTERESTED</button>
+                </div>
+                <div class="col-lg-auto col-sm-3">
+                </div>
+                <div class="col col-lg-4 col-sm-4">
+                    <button type="button" class="btn btn-danger">NOT INTERESTED</button>
+                </div>
+            </div>
 
+            <!----------------------------------------------->
+            <!--  CONFIGURE FIREBASE  -->
+            <!----------------------------------------------->
 
-  <script>
-    // TODO: Replace the following with your app's Firebase project configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
-        authDomain: "techmini-e3a2a.firebaseapp.com",
-        databaseURL: "https://techmini-e3a2a.firebaseio.com",
-        projectId: "techmini-e3a2a",
-        storageBucket: "techmini-e3a2a.appspot.com",
-        messagingSenderId: "281432190044",
-        appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
-    };
+            <script>
+                // TODO: Replace the following with your app's Firebase project configuration
+                var firebaseConfig = {
+                    apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
+                    authDomain: "techmini-e3a2a.firebaseapp.com",
+                    databaseURL: "https://techmini-e3a2a.firebaseio.com",
+                    projectId: "techmini-e3a2a",
+                    storageBucket: "techmini-e3a2a.appspot.com",
+                    messagingSenderId: "281432190044",
+                    appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
+                };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-</script>
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const db = firebase.firestore();
+            </script>
 
-<!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED -->
-<script src="scripts/main.js"></script>
+            <!----------------------------------------------->
+            <!--  LOAD INTERNAL JS AFTER BODY LOADS  -->
+            <!----------------------------------------------->
+
+            <script src="scripts/main.js"></script>
 </body>
 
-</html>
-
-</body>
 
 
 </html>

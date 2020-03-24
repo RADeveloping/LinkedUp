@@ -1,9 +1,8 @@
-/* MESSAGE LIST PAGE */
-#messageList_body {
+body {
     padding-top: 90px;
     font-size: 3vw;
 }
 
 .messageList_user {
-  font-size: 3vw;
+    font-size: 3vw;
 }

@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-    <head>
-        <title>Linked Up - Message</title>
 
-        <!-- Our own CSS -->
-        <link rel="stylesheet" href="css/messageUser/style.css">
+<head>
+    <title>Linked Up - Message</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Our own CSS -->
+    <link rel="stylesheet" href="css/messageUser/style.css">
 
-        <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
-        
-        <!----------------------------------------------->
-        <!------------ EXTERNAL JS FILES   -------------->
-        <!----------------------------------------------->
-    </head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <body>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <a href="index.html" class="navbar-brand">Linked Up</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+    <!-- DON'T REMOVE THESE TWO EXTERNAL JS FILES -->
+
+    <!----------------------------------------------->
+    <!------------ EXTERNAL JS FILES   -------------->
+    <!----------------------------------------------->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <a href="index.html" class="navbar-brand">Linked Up</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav">
-                    <a href="#" class="nav-item nav-link">About</a>
-                    <a href="#" class="nav-item nav-link">Services</a>
-                    <a href="#" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="navbar-nav ml-auto">
-                    <a href="#" class="nav-item nav-link">Profile</a>
-                </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link">About</a>
+                <a href="#" class="nav-item nav-link">Services</a>
+                <a href="#" class="nav-item nav-link">Contact</a>
             </div>
-        </nav>
+            <div class="navbar-nav ml-auto">
+                <a href="#" class="nav-item nav-link">Profile</a>
+            </div>
+        </div>
+    </nav>
 
-        <ul class="nav nav-tabs" id="messageNavTabs">
-            <li class="nav-item">
-                <a href="messageList.html" class="nav-link">Back</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Settings</a>
-            </li>
-        </ul>
-        
-        <!-- Append messages to "allMessages" div in JavaScript -->
-        <!-- Must include all the elements with the class names like in example -->
-        <div id="allMessages">
-            <!-- Example 
+    <ul class="nav nav-tabs" id="messageNavTabs">
+        <li class="nav-item">
+            <a href="messagelist.html" class="nav-link">Back</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">Settings</a>
+        </li>
+    </ul>
+
+    <!-- Append messages to "allMessages" div in JavaScript -->
+    <!-- Must include all the elements with the class names like in example -->
+    <div id="allMessages">
+        <!-- Example 
                 <div class="messageDiv">
                     <img class="profilePic" src="https://via.placeholder.com/100.png/00f">
                     <p class="userName">Bob</p>
@@ -55,30 +55,30 @@
                     <p class="sentDate">Jan 1, 2000, 12:00 am</p>
                 </div>
             -->
-        </div>
+    </div>
 
-        <div class="panel-footer fixed-bottom">
-            <div class="input-group">
-                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                <span class="input-group-btn">
+    <div class="panel-footer fixed-bottom">
+        <div class="input-group">
+            <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+            <span class="input-group-btn">
                     <button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessage()">Send</button>
                 </span>
-            </div>
         </div>
+    </div>
 
-        <!-- FIREBASE -->
-        <!-- Firebase Core SDKs -->
-        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
-        <!-- Firebase Products -->
-        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script> 
-        <!-- Firebase Initialize -->
-        <script src="scripts/firebase/firebaseAPI.js"></script>
-        <!-- Firebase Authentication State Observer -->
-        <script src="scripts/firebase/authenticationStateObserver.js"></script>
-        
-        <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED AND REQUIRED SCRIPTS ARE LOADED -->
-        <script src="scripts/messageUser.js"></script>
-    </body>
+    <!-- FIREBASE -->
+    <!-- Firebase Core SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <!-- Firebase Products -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <!-- Firebase Initialize -->
+    <script src="scripts/firebase/firebaseAPI.js"></script>
+    <!-- Firebase Authentication State Observer -->
+    <script src="scripts/firebase/authenticationStateObserver.js"></script>
+
+    <!-- THIS IS THE LOCAL JS LOADED AFTER ALL THE HTML ELEMENTS ARE CREATED AND REQUIRED SCRIPTS ARE LOADED -->
+    <script src="scripts/messageUser.js"></script>
+</body>
 
 </html>

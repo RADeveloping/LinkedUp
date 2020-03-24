@@ -17,7 +17,7 @@
 /**
  * @desc adds a event handler to the login button
  */
-function addHandlerToLoginButton(){
+function addHandlerToLoginButton() {
 
     let index_login = document.getElementById("index_login").onclick = loginPressed;
 }
@@ -25,14 +25,14 @@ function addHandlerToLoginButton(){
 /**
  * @desc redirects to the login page
  */
-function loginPressed(){
+function loginPressed() {
     window.location.href = "login.html";
 }
 
 /**
  * @desc adds a event handler to the signup button
  */
-function addHandlerToSignUpButton(){
+function addHandlerToSignUpButton() {
 
     let index_signup = document.getElementById("index_signup").onclick = signUpPressed;
 }
@@ -40,12 +40,12 @@ function addHandlerToSignUpButton(){
 /**
  * @desc redirects to the sign up page
  */
-function signUpPressed(){
+function signUpPressed() {
     window.location.href = "signup.html";
 }
 
 
 
-// CALL INDEX FUCNTIONS HERE
+// CALL INDEX FUNCTIONS HERE
 addHandlerToLoginButton();
 addHandlerToSignUpButton();
