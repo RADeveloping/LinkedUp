@@ -10,6 +10,7 @@ const MONTH =
 // Global Variables
 let elements;
 
+// 
 function sendMessage() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -17,12 +18,14 @@ function sendMessage() {
             setElementAttributes();
             setElementValues(user);
             appendElements();
+            updateChats(user);
         } else {
             alert("You're not logged in!");
         }
     }) 
 }
 
+// HTML DOM Functions
 function createMessageDiv() {
     elements = [
         document.createElement("img"),
@@ -67,4 +70,33 @@ function appendElements() {
     elements[4].appendChild(elements[2]);
     elements[4].appendChild(elements[3]);
     elements[5].appendChild(elements[4]);
+}
+
+// Firebase Cloud Firestore Functions
+function updateChats(user) {
+    let docID;
+    let chatRef = db.collection("chats");
+
+    db.collection("chats").add({
+        user1ID : user.uid,
+        user2ID : "user2ID"
+    })
+    .then(function (docRef) {
+        docID = docRef.id;
+
+        chatRef.doc(docID).collection("messages").doc("0").set({
+            from : user.uid,
+            message : elements[2].innerHTML,
+            time : firebase.firestore.FieldValue.serverTimestamp()
+        });
+    })
+    .catch(function(error) {
+        console.log("Error adding document: " + error)
+    });
+
+    updateUser(user);
+}
+
+function updateUser(user) {
+
 }
