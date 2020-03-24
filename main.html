@@ -76,7 +76,7 @@
     <!--  MAIN USER CARD SECTION -->
     <!----------------------------------------------->
 
-    <div class="center">
+    <div class="center d-block" id="usercard">
 
         <div class="card">
             <div class="additional">
@@ -130,44 +130,60 @@
             </div>
         </div>
 
+
+        <!--  INTERESTED / NOT INTERESTED BUTTONS  -->
+
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-lg-4 col-sm-4">
-                    <button type="button" class="btn btn-success">INTERESTED</button>
+                    <button type="button" class="btn btn-success" id="interestedButton">INTERESTED</button>
                 </div>
                 <div class="col-lg-auto col-sm-3">
                 </div>
                 <div class="col col-lg-4 col-sm-4">
-                    <button type="button" class="btn btn-danger">NOT INTERESTED</button>
+                    <button type="button" class="btn btn-danger" id="notInterestedButton">NOT INTERESTED</button>
                 </div>
+
             </div>
+        </div>
+    </div>
 
-            <!----------------------------------------------->
-            <!--  CONFIGURE FIREBASE  -->
-            <!----------------------------------------------->
+    <!----------------------------------------------->
+    <!--  NO MORE USERS TO SHOW VIEW  -->
+    <!----------------------------------------------->
 
-            <script>
-                // TODO: Replace the following with your app's Firebase project configuration
-                var firebaseConfig = {
-                    apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
-                    authDomain: "techmini-e3a2a.firebaseapp.com",
-                    databaseURL: "https://techmini-e3a2a.firebaseio.com",
-                    projectId: "techmini-e3a2a",
-                    storageBucket: "techmini-e3a2a.appspot.com",
-                    messagingSenderId: "281432190044",
-                    appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
-                };
+    <div class="container d-none" id="noMoreUsers">
+        <div class="row justify-content-md-center">
+            <h1>NO MORE USERS TO SHOW</h1>
+        </div>
+    </div>
 
-                // Initialize Firebase
-                firebase.initializeApp(firebaseConfig);
-                const db = firebase.firestore();
-            </script>
+    <!----------------------------------------------->
+    <!--  CONFIGURE FIREBASE  -->
+    <!----------------------------------------------->
 
-            <!----------------------------------------------->
-            <!--  LOAD INTERNAL JS AFTER BODY LOADS  -->
-            <!----------------------------------------------->
+    <script>
+        // TODO: Replace the following with your app's Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
+            authDomain: "techmini-e3a2a.firebaseapp.com",
+            databaseURL: "https://techmini-e3a2a.firebaseio.com",
+            projectId: "techmini-e3a2a",
+            storageBucket: "techmini-e3a2a.appspot.com",
+            messagingSenderId: "281432190044",
+            appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
+        };
 
-            <script src="scripts/main.js"></script>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+
+    <!----------------------------------------------->
+    <!--  LOAD INTERNAL JS AFTER BODY LOADS  -->
+    <!----------------------------------------------->
+
+    <script src="scripts/main.js"></script>
 </body>
 
 

@@ -1,12 +1,17 @@
 /**
- * @desc add onClick to navbar buttons
+ * @desc add onClick to buttons
  */
 
 function init() {
     document.getElementById("logoutButton").onclick = logout;
+    document.getElementById("interestedButton").onclick = interested;
+    document.getElementById("notInterestedButton").onclick = notInterested;
+
+    usersArray = [];
 }
 
 init();
+
 
 /**
  * @desc log out current logged in user.
@@ -37,23 +42,119 @@ firebase.auth().onAuthStateChanged(function(user) {
         var uid = user.uid;
         var providerData = user.providerData;
 
-        var docRef = db.collection("users").doc(user.uid)
-        docRef.get().then(function(doc) {
-            if (doc.exists) {
-                document.getElementById("firstName").innerText = doc.data().firstName;
-                document.getElementById("firstNameHover").innerText = doc.data().firstName;;
-                document.getElementById("bio").innerText = doc.data().bio;
-                document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
-                document.getElementById("campus").innerText = "BCIT | BURNABY";
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
+        //     // GET USER PROFILE 
+        //     var docRef = db.collection("users").doc(user.uid)
+        //     docRef.get().then(function(doc) {
+        //         if (doc.exists) {
+        //             document.getElementById("firstName").innerText = doc.data().firstName;
+        //             document.getElementById("firstNameHover").innerText = doc.data().firstName;;
+        //             document.getElementById("bio").innerText = doc.data().bio;
+        //             document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
+        //             document.getElementById("campus").innerText = "BCIT | BURNABY";
+        //         } else {
+        //             // doc.data() will be undefined in this case
+        //             console.log("No such document!");
+        //         }
+        //     }).catch(function(error) {
+        //         console.log("Error getting document:", error);
+        //     });
+
+
+        //         db.collection("users").get().then(function(querySnapshot) {
+        //             querySnapshot.forEach(function(docUsers) {
+        //                 db.collection("users").doc(docUsers.id).collection("likes").get()
+        //                     .then(querySnapshot => {
+        //                         querySnapshot.forEach(doc => {
+
+        //                             if (doc.id == uid) {
+        //                                 likesArray.push(docUsers.id);
+        //                                 getNextUserProfile(docUsers.id);
+        //                             }
+        //                         })
+        //                     });
+        //             });
+
+        //         });
+
+
+
+        //     }
+        // });
+
+        let docID;
+
+        db.collection("users")
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    usersArray.push(doc.id);
+                    docID = doc.id;
+                });
+
+                getNextUserProfile(docID);
+
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+
+
+
     }
 });
+
+/**
+ * @desc user selected not interested
+ */
+
+function notInterested() {
+
+    if (usersArray.length > 0) {
+        docID = usersArray.pop();
+        getNextUserProfile(docID);
+    } else {
+        document.getElementById("usercard").classList.replace("d-block", "d-none");
+        document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
+    }
+
+}
+
+/**
+ * @desc user selected interested.
+ */
+
+function interested() {
+
+    if (usersArray.length > 0) {
+        docID = usersArray.pop();
+        getNextUserProfile(docID);
+    } else {
+        document.getElementById("usercard").classList.replace("d-block", "d-none");
+        document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
+    }
+}
+
+
+function getNextUserProfile(docID) {
+    // GET USER PROFILE 
+    let docRef = db.collection("users").doc(docID)
+    docRef.get().then(function(doc) {
+        if (doc.exists) {
+            document.getElementById("firstName").innerText = doc.data().firstName;
+            document.getElementById("firstNameHover").innerText = doc.data().firstName;;
+            document.getElementById("bio").innerText = doc.data().bio;
+            document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
+            document.getElementById("campus").innerText = "BCIT | BURNABY";
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+}
 
 /**
  * @desc calculate a users age based on their dob.
