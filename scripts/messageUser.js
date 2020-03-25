@@ -13,7 +13,7 @@ const MONTH =
 // Global Variables     //
 //----------------------//
 let elements;
-let docID;
+let chatId;
 
 //----------------------//
 // Button Event         //
@@ -89,34 +89,54 @@ function appendElements() {
 function updateChats(user) {
     let chatRef = db.collection("chats");
 
-    if (docID == null) {
-        db.collection("chats").add({
-            user1ID : user.uid,
-            user2ID : "user2ID"
-        })
-        .then(function (docRef) {
-            docID = docRef.id;
-
-            chatRef.doc(docID).collection("messages").add({
-                from : user.uid,
-                message : elements[2].innerHTML,
-                time : firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
-        .catch(function(error) {
-            console.log("Error adding document: " + error)
+    if (chatId == null) {
+        let chatIdRef = chatRef.doc();
+        chatId = chatIdRef.id;
+        
+        chatIdRef.set({
+            numMessages : 0
         });
-    } else {
-        chatRef.doc(docID).collection("messages").add({
+        chatIdRef.collection("messages").add({
             from : user.uid,
             message : elements[2].innerHTML,
             time : firebase.firestore.FieldValue.serverTimestamp()
         });
-    }
+        
+        updateUser(user, chatId);
+    } else {
+        // TODO: This block needs to update the number of messages in the chat
+        let numMsgs = chatRef.doc(chatId).data;
+        console.log(numMsgs);
+        numMsgs++;
 
-    updateUser(user);
+        chatRef.doc(chatId).set({
+            numMessages : numMsgs
+        });
+
+        chatRef.doc(chatId).collection("messages").add({
+            from : user.uid,
+            message : elements[2].innerHTML,
+            time : firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        updateUser(user, chatId);
+    }    
 }
 
-function updateUser(user) {
-    
+function updateUser(user, chatId) {
+    let chatIdRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
+
+    chatIdRef.get().then(function(doc) {
+        if (doc.exists) {
+            chatIdRef.update({
+                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+            })
+        } else {
+            chatIdRef.set({
+                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+            })
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 }
