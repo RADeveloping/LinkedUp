@@ -1,5 +1,6 @@
 let profilePhotoFile;
 let profilePhotoDataUrl;
+let tempPhotoURL;
 
 /**
  * @desc creates a new drop zone to upload image
@@ -21,8 +22,7 @@ var myDropzone = new Dropzone("div#photoupload", {
             }
             setTimeout(function() {
                 profilePhotoFile = file;
-                profilePhotoDataUrl = dataUrl;
-
+                uploadPhotoToFirebase(file, dataUrl);
                 document.getElementById("profileimage").src = dataUrl;
                 document.getElementById("profileimageDescription").innerText = "Awesome!"
                 myDropzone.removeFile(file);
@@ -44,48 +44,23 @@ function uploadPhotoToFirebase(file, dataUrl) {
         contentType: file.type
     };
     const task = storageRef.child("images/" + firebase.auth().currentUser.uid).put(file, metadata);
+
     task
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then((url) => {
-            addPhotoToUserProfile(url);
+            tempPhotoURL = url;
         })
         .catch(console.error);
 
 }
 
 
-
-/**
- * @desc adds photo to Firstore
- * @param url string
- */
-function addPhotoToUserProfile(url) {
-
-    var user = firebase.auth().currentUser;
-    var userRef = db.collection("users").doc(user.uid);
-    // Set the "capital" field of the city 'DC'
-    return userRef.update({
-            photoURL: url
-        })
-        .then(function() {
-            console.log("Document successfully updated!");
-        })
-        .catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
-
-}
 /**
  * @desc add onClick to buttons
  */
 
 function init() {
     document.getElementById("logoutButton").onclick = logout;
-    document.getElementById("interestedButton").onclick = interested;
-    document.getElementById("notInterestedButton").onclick = notInterested;
-
-    usersArray = [];
 }
 
 init();
@@ -127,7 +102,6 @@ function loadUserInfo(user) {
 
     var docRef = db.collection("users").doc(user.uid)
 
-
     docRef.get().then(function(doc) {
         if (doc.exists) {
             firstName.value = doc.data().firstName;
@@ -135,7 +109,18 @@ function loadUserInfo(user) {
             validationDateOfBirth.value = doc.data().dateOfBirth;
             bio.value = doc.data().bio;
             email.value = user.email;
-            userProfileImage.src = getProfileImageFromFireBaseurl(doc.data().photoURL);
+
+            var httpsReference = storage.refFromURL(doc.data().photoURL);
+            httpsReference.getDownloadURL().then(function(newURL) {
+                // Or inserted into an <img> element:
+                userProfileImage.src = newURL;
+
+            }).catch(function(error) {
+                // Handle any errors
+            });
+
+
+            //  userProfileImage.src = a;
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -145,17 +130,6 @@ function loadUserInfo(user) {
     });
 }
 
-function getProfileImageFromFireBaseurl(url) {
-    var httpsReference = storage.refFromURL(user.photoURL);
-
-    httpsReference.getDownloadURL().then(function(url) {
-        // Or inserted into an <img> element:
-        return url;
-
-    }).catch(function(error) {
-        // Handle any errors
-    });
-}
 
 /**
  * @desc JavaScript for disabling form submissions if there are invalid fields
@@ -198,6 +172,7 @@ function saveUserInfo() {
     document.getElementById("completeRegistrationButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
     var user = firebase.auth().currentUser;
+    console.log(tempPhotoURL);
 
     user.updateProfile({
         displayName: document.getElementById("validationFirstName").value
@@ -208,6 +183,8 @@ function saveUserInfo() {
             dateOfBirth: document.getElementById("validationDateOfBirth").value,
             bio: document.getElementById("bioTextBox").value,
             email: user.email,
+            photoURL: tempPhotoURL
+
         }).then(function() {
             console.log("Updated information!");
             window.location.assign("main.html");

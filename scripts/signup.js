@@ -67,7 +67,6 @@ function addPhotoToUserProfile(url) {
             photoURL: url,
         }).then(function() {
             console.log("Updated information!");
-
         }).catch(function(error) {
             console.log("error adding photo url to db");
 
@@ -75,19 +74,6 @@ function addPhotoToUserProfile(url) {
     });
 
 }
-/**
- * @desc add onClick to buttons
- */
-
-function init() {
-    document.getElementById("logoutButton").onclick = logout;
-    document.getElementById("interestedButton").onclick = interested;
-    document.getElementById("notInterestedButton").onclick = notInterested;
-
-    usersArray = [];
-}
-
-init();
 
 
 /**
