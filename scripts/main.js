@@ -89,7 +89,9 @@ firebase.auth().onAuthStateChanged(function(user) {
                 querySnapshot.forEach(function(doc) {
                     // doc.data() is never undefined for query doc snapshots
                     console.log(doc.id, " => ", doc.data());
-                    usersArray.push(doc.id);
+                    if (doc.id != user.uid) {
+                        usersArray.push(doc.id);
+                    }
 
                 });
 
