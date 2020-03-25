@@ -75,15 +75,36 @@ function addPhotoToUserProfile(url) {
     });
 
 }
-
 /**
- * @desc initialize javascript to do initial tasks.
+ * @desc add onClick to buttons
  */
+
 function init() {
-    document.getElementById("validationCustomEmail").readOnly = true;
+    document.getElementById("logoutButton").onclick = logout;
+    document.getElementById("interestedButton").onclick = interested;
+    document.getElementById("notInterestedButton").onclick = notInterested;
+
+    usersArray = [];
 }
 
 init();
+
+
+/**
+ * @desc log out current logged in user.
+ */
+
+function logout() {
+    firebase.auth().signOut().then(function() {
+
+            window.location.assign("login.html");
+        })
+        .catch(function(err) {
+            // Handle errors
+        });
+
+}
+
 
 /**
  * @desc checks if user is fully registered or not
