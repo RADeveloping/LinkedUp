@@ -23,8 +23,10 @@
     <!----------------------------------------------->
     <!--  INTERNAL CSS AND JS -->
     <!----------------------------------------------->
-
     <link href="css/login/floating-labels.css" rel="stylesheet">
+    <script src="scripts/dropzone/dropzone.js"></script>
+    <link href="css/createprofile/style.css" rel="stylesheet">
+
 
 </head>
 
@@ -43,18 +45,24 @@
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-storage.js"></script>
 
 
     <!----------------------------------------------->
     <!--  MAIN CONTAINER FOR REGISTRATION FORM  -->
     <!----------------------------------------------->
 
+
     <div class="container">
+        <div class="text-center mb-3">
+            <img class="mb-2 mt-4 img-fluid" src="images/logo.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-1 font-weight-normal">Linked Up</h1>
+            <p>Looks like you need to make some changes to your profile! We can help you with that!</p>
+        </div>
         <form class="form-completeRegistration ml-2 mr-2" novalidate>
-            <div class="text-center mb-3">
-                <img class="mb-2 img-fluid" src="images/logo.svg" alt="" width="72" height="72">
-                <h1 class="h3 mb-1 font-weight-normal">Linked Up</h1>
-                <p>We are almost done! Tell us about yourself to complete your registration!</p>
+            <div class="text-center" id="photoupload">
+                <img class="mb-2 img-fluid" src="images/upload.png" alt="" width="72" height="72" style="pointer-events: none;" id="profileimage"><br>
+                <small class="text-muted" id="profileimageDescription">Upload a profile picture</small>
             </div>
 
             <label for="validationCustomEmail">Email</label>
@@ -142,6 +150,8 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        let storage = firebase.storage();
+        const storageRef = storage.ref();
     </script>
 
     <!----------------------------------------------->

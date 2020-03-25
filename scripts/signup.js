@@ -1,3 +1,81 @@
+let profilePhotoFile;
+let profilePhotoDataUrl;
+
+var myDropzone = new Dropzone("div#photoupload", {
+    url: "/file/post",
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 4, // MB
+    acceptedFiles: "image/*",
+    capture: "image/*",
+    thumbnail: function(file, dataUrl) {
+        if (file.previewElement) {
+            file.previewElement.classList.remove("dz-file-preview");
+            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+            for (var i = 0; i < images.length; i++) {
+                var thumbnailElement = images[i];
+                thumbnailElement.alt = file.name;
+                thumbnailElement.src = dataUrl;
+            }
+            setTimeout(function() {
+                profilePhotoFile = file;
+                profilePhotoDataUrl = dataUrl;
+
+                uploadPhotoToFirebase(profilePhotoFile, profilePhotoDataUrl);
+                document.getElementById("profileimage").src = dataUrl;
+                document.getElementById("profileimageDescription").innerText = "Awesome!"
+                myDropzone.removeFile(file);
+
+            }, 1);
+        }
+    }
+});
+
+/**
+ * @desc adds photo to Firebase Storage
+ * @param url string
+ * @param dataURL the base64 url of the imagefile
+ */
+function uploadPhotoToFirebase(file, dataUrl) {
+
+    const metadata = {
+        contentType: file.type
+    };
+    const task = storageRef.child("images/" + firebase.auth().currentUser.uid).put(file, metadata);
+    task
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then((url) => {
+            addPhotoToUserProfile(url);
+        })
+        .catch(console.error);
+
+}
+
+
+
+/**
+ * @desc adds photo to Firstore
+ * @param url string
+ */
+function addPhotoToUserProfile(url) {
+
+    var user = firebase.auth().currentUser;
+
+    user.updateProfile({
+        displayName: document.getElementById("validationFirstName").value
+    }).then(function() {
+        db.collection("users").doc(user.uid).update({
+            photoURL: url,
+        }).then(function() {
+            console.log("Updated information!");
+
+        }).catch(function(error) {
+            console.log("error adding photo url to db");
+
+        });
+    });
+
+}
+
 /**
  * @desc initialize javascript to do initial tasks.
  */

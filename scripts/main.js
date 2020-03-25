@@ -99,11 +99,11 @@ firebase.auth().onAuthStateChanged(function(user) {
             .catch(function(error) {
                 console.log("Error getting documents: ", error);
             });
-
-
-
     }
 });
+
+
+
 
 /**
  * @desc user selected not interested
@@ -143,10 +143,13 @@ function getNextUserProfile(docID) {
     docRef.get().then(function(doc) {
         if (doc.exists) {
             document.getElementById("firstName").innerText = doc.data().firstName;
-            document.getElementById("firstNameHover").innerText = doc.data().firstName;;
+            document.getElementById("age_campus").innerText = calculateAge(doc.data().dateOfBirth) + " " + "BCIT | BURNABY";
             document.getElementById("bio").innerText = doc.data().bio;
-            document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
-            document.getElementById("campus").innerText = "BCIT | BURNABY";
+            document.getElementById("userimage").src = "images/main/testimage1.jpeg";
+
+            // document.getElementById("bio").innerText = doc.data().bio;
+            // document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
+            // document.getElementById("campus").innerText = "BCIT | BURNABY";
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");

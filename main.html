@@ -49,8 +49,8 @@
     <!--  NAVIGATION BAR -->
     <!----------------------------------------------->
 
-    <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top py-3" id="mainNav">
-        <div class="container">
+    <nav class="navbar navbar-expand bg-light navbar-light fixed-top" id="mainNav">
+        <div class="container-fluid">
             <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -71,69 +71,41 @@
         </div>
     </nav>
 
-
     <!----------------------------------------------->
     <!--  MAIN USER CARD SECTION -->
     <!----------------------------------------------->
 
-    <div class="center d-block" id="usercard">
 
-        <div class="card">
-            <div class="additional">
-                <div class="user-card">
-                    <div class="level center" id="age">
-                        loading..
-                    </div>
-                    <div class="points center" id="campus">
-                        Loading..
-                    </div>
-                    <img class="rounded-circle center" width="110" height="110" src="images/messagelist/user01.jpg" alt="user01">
-                </div>
-                <div class="more-info">
-                    <h1 id="firstName">Loading..</h1>
-                    <div class="coords">
-                        <span>Group Name</span>
-                        <span>Joined January 2019</span>
-                    </div>
-                    <div class="coords">
-                        <span>Position/Role</span>
-                        <span>City, Country</span>
-                    </div>
-                    <div class="stats">
-                        <div>
-                            <div class="title">Awards</div>
-                            <i class="fa fa-trophy"></i>
-                            <div class="value">2</div>
+    <div class="card d-block" style="width: 80%;" id="usercard">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="images/main/placeholderimage.jpg" class="card-img" width=100% alt="User image" id="userimage">
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title" id="firstName">Loading..</h5>
+                            <h6 class="card-title" id="age_campus">Loading..</h5>
                         </div>
-                        <div>
-                            <div class="title">Matches</div>
-                            <i class="fa fa-gamepad"></i>
-                            <div class="value">27</div>
-                        </div>
-                        <div>
-                            <div class="title">Pals</div>
-                            <i class="fa fa-group"></i>
-                            <div class="value">123</div>
-                        </div>
-                        <div>
-                            <div class="title">Coffee</div>
-                            <i class="fa fa-coffee"></i>
-                            <div class="value infinity">∞</div>
-                        </div>
+                    </div>
+                    <p class="card-text" id="bio">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="mt-auto">
+                        <button type="button" class="btn btn-success" id="interestedButton">INTERESTED</button>
+                        <button type="button" class="btn btn-danger" id="notInterestedButton">NOT INTERESTED</button>
                     </div>
                 </div>
             </div>
-            <div class="general">
-                <h1 id="firstNameHover">Loading..</h1>
-                <p id="bio">Loading..</p>
-                <span class="more">Mouse over the card for more info</span>
-            </div>
+
         </div>
+    </div>
 
 
-        <!--  INTERESTED / NOT INTERESTED BUTTONS  -->
 
-        <div class="container">
+
+    <!--  INTERESTED / NOT INTERESTED BUTTONS  -->
+
+    <!-- <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-lg-4 col-sm-4">
                     <button type="button" class="btn btn-success" id="interestedButton">INTERESTED</button>
@@ -145,8 +117,8 @@
                 </div>
 
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
 
     <!----------------------------------------------->
     <!--  NO MORE USERS TO SHOW VIEW  -->
@@ -177,6 +149,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const storage = firebase.storage();
     </script>
 
     <!----------------------------------------------->

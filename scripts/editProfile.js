@@ -1,3 +1,82 @@
+let profilePhotoFile;
+let profilePhotoDataUrl;
+
+/**
+ * @desc creates a new drop zone to upload image
+ */
+var myDropzone = new Dropzone("div#photoupload", {
+    url: "/file/post",
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 4, // MB
+    acceptedFiles: "image/*",
+    capture: "image/*",
+    thumbnail: function(file, dataUrl) {
+        if (file.previewElement) {
+            file.previewElement.classList.remove("dz-file-preview");
+            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+            for (var i = 0; i < images.length; i++) {
+                var thumbnailElement = images[i];
+                thumbnailElement.alt = file.name;
+                thumbnailElement.src = dataUrl;
+            }
+            setTimeout(function() {
+                profilePhotoFile = file;
+                profilePhotoDataUrl = dataUrl;
+
+                document.getElementById("profileimage").src = dataUrl;
+                document.getElementById("profileimageDescription").innerText = "Awesome!"
+                myDropzone.removeFile(file);
+
+            }, 1);
+        }
+    }
+});
+
+/**
+ * @desc adds photo to Firebase Storage
+ * @param url string
+ * @param dataURL the base64 url of the imagefile
+ */
+function uploadPhotoToFirebase(file, dataUrl) {
+
+    const name = (+new Date()) + '-' + file.name;
+    const metadata = {
+        contentType: file.type
+    };
+    const task = storageRef.child("images/" + firebase.auth().currentUser.uid).put(file, metadata);
+    task
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then((url) => {
+            addPhotoToUserProfile(url);
+        })
+        .catch(console.error);
+
+}
+
+
+
+/**
+ * @desc adds photo to Firstore
+ * @param url string
+ */
+function addPhotoToUserProfile(url) {
+
+    var user = firebase.auth().currentUser;
+    var userRef = db.collection("users").doc(user.uid);
+    // Set the "capital" field of the city 'DC'
+    return userRef.update({
+            photoURL: url
+        })
+        .then(function() {
+            console.log("Document successfully updated!");
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+
+}
+
 /**
  * @desc make initial fields readOnly to prevent user editing.
  */
@@ -23,16 +102,19 @@ function loadUserInfo(user) {
     let dateOfBirth = document.getElementById("validationDateOfBirth")
     let bio = document.getElementById("bioTextBox")
     let email = document.getElementById("validationCustomEmail");
+    let userProfileImage = document.getElementById("profileimage");
+
     var docRef = db.collection("users").doc(user.uid)
+
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-
             firstName.value = doc.data().firstName;
             lastName.value = doc.data().lastName;
             validationDateOfBirth.value = doc.data().dateOfBirth;
             bio.value = doc.data().bio;
             email.value = user.email;
+            userProfileImage.src = getProfileImageFromFireBaseurl(doc.data().photoURL);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -42,6 +124,17 @@ function loadUserInfo(user) {
     });
 }
 
+function getProfileImageFromFireBaseurl(url) {
+    var httpsReference = storage.refFromURL(user.photoURL);
+
+    httpsReference.getDownloadURL().then(function(url) {
+        // Or inserted into an <img> element:
+        return url;
+
+    }).catch(function(error) {
+        // Handle any errors
+    });
+}
 
 /**
  * @desc JavaScript for disabling form submissions if there are invalid fields
@@ -93,7 +186,7 @@ function saveUserInfo() {
             lastName: document.getElementById("validationLastName").value,
             dateOfBirth: document.getElementById("validationDateOfBirth").value,
             bio: document.getElementById("bioTextBox").value,
-            email: user.email
+            email: user.email,
         }).then(function() {
             console.log("Updated information!");
             window.location.assign("main.html");

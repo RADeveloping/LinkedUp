@@ -1,0 +1,17 @@
+ body {
+     padding-top: 125px;
+ }
+ 
+ @media only screen and (min-width: 480px) and (max-width: 768px) {
+     body {
+         padding-top: 350px;
+     }
+ }
+ 
+ #data-dz-thumbnail {
+     display: none;
+ }
+ 
+ #profileimage {
+     border-radius: 50%;
+ }
