@@ -61,6 +61,8 @@ function uploadPhotoToFirebase(file, dataUrl) {
 
 function init() {
     document.getElementById("logoutButton").onclick = logout;
+    document.getElementById("validationCustomEmail").readOnly = true;
+
 }
 
 init();
@@ -172,7 +174,23 @@ function saveUserInfo() {
     document.getElementById("completeRegistrationButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
     var user = firebase.auth().currentUser;
-    console.log(tempPhotoURL);
+
+    var docRef = db.collection("users").doc(user.uid)
+    docRef.get().then(function(doc) {
+        if (doc.exists) {
+
+            if (tempPhotoURL == null) {
+                tempPhotoURL = doc.data().photoURL;
+            }
+
+            //  userProfileImage.src = a;
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 
     user.updateProfile({
         displayName: document.getElementById("validationFirstName").value

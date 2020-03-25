@@ -145,8 +145,11 @@ function getNextUserProfile(docID) {
             document.getElementById("firstName").innerText = doc.data().firstName;
             document.getElementById("age_campus").innerText = calculateAge(doc.data().dateOfBirth) + " " + "BCIT | BURNABY";
             document.getElementById("bio").innerText = doc.data().bio;
-            document.getElementById("userimage").src = "images/main/testimage1.jpeg";
-
+            if (doc.data().photoURL.length > 10) {
+                document.getElementById("userimage").src = doc.data().photoURL;
+            } else {
+                document.getElementById("userimage").src = "images/main/placeholderimage.jpg";
+            }
             // document.getElementById("bio").innerText = doc.data().bio;
             // document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
             // document.getElementById("campus").innerText = "BCIT | BURNABY";
