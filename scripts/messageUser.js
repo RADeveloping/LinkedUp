@@ -66,6 +66,7 @@ function setElementValues(user) {
     elements[1].innerHTML = userName;
     elements[2].innerHTML = message;
     elements[3].innerHTML = 
+        // TODO: When possible, replace this with the timestamp provided by Firestore
         MONTH[today.getMonth()] + " " 
         + today.getDate() + ", " 
         + today.getFullYear() + ", " 
@@ -94,7 +95,7 @@ function updateChats(user) {
         chatId = chatIdRef.id;
         
         chatIdRef.set({
-            numMessages : 0
+            numMessages : 1
         });
         chatIdRef.collection("messages").add({
             from : user.uid,
@@ -104,13 +105,8 @@ function updateChats(user) {
         
         updateUser(user, chatId);
     } else {
-        // TODO: This block needs to update the number of messages in the chat
-        let numMsgs = chatRef.doc(chatId).data;
-        console.log(numMsgs);
-        numMsgs++;
-
-        chatRef.doc(chatId).set({
-            numMessages : numMsgs
+        chatRef.doc(chatId).update({
+            numMessages : firebase.firestore.FieldValue.increment(1)
         });
 
         chatRef.doc(chatId).collection("messages").add({
