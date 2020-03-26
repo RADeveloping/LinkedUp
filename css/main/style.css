@@ -10,12 +10,11 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #777;
+    background-color: #f8f9fa;
     text-align: center;
-    font-family: georgia;
+    font-family: Abel, Arial, Verdana, sans-serif;
   }
 
 .footer p {
-    color: white;
-    font-size: 13px;
+    color: black;
   }
