@@ -119,6 +119,8 @@ function loadUserInfo(user) {
 
             }).catch(function(error) {
                 // Handle any errors
+                console.log(error);
+
             });
 
 

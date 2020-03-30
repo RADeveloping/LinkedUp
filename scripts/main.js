@@ -1,13 +1,20 @@
 /**
  * @desc add onClick to buttons
  */
+let uid;
+let usersArray = [];
+let hasSeenArray = [];
+let likesArray = [];
+let currentExternalID;
 
 function init() {
     document.getElementById("logoutButton").onclick = logout;
     document.getElementById("interestedButton").onclick = interested;
     document.getElementById("notInterestedButton").onclick = notInterested;
 
-    usersArray = [];
+
+
+
 }
 
 init();
@@ -39,7 +46,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         var emailVerified = user.emailVerified;
         var photoURL = user.photoURL;
         var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
+        uid = user.uid;
         var providerData = user.providerData;
 
         //     // GET USER PROFILE 
@@ -60,46 +67,40 @@ firebase.auth().onAuthStateChanged(function(user) {
         //     });
 
 
-        //         db.collection("users").get().then(function(querySnapshot) {
-        //             querySnapshot.forEach(function(docUsers) {
-        //                 db.collection("users").doc(docUsers.id).collection("likes").get()
-        //                     .then(querySnapshot => {
-        //                         querySnapshot.forEach(doc => {
-
-        //                             if (doc.id == uid) {
-        //                                 likesArray.push(docUsers.id);
-        //                                 getNextUserProfile(docUsers.id);
-        //                             }
-        //                         })
-        //                     });
-        //             });
-
-        //         });
-
-
-
-        //     }
-        // });
-
         let docID;
+        let docRef = db.collection("users").doc(user.uid).collection("hasSeen").get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    hasSeenArray.push(doc.id);
+                });
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+
 
         db.collection("users")
             .get()
             .then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
                     if (doc.id != user.uid) {
-                        usersArray.push(doc.id);
+                        if (!hasSeenArray.includes(doc.id)) {
+                            usersArray.push(doc.id);
+                        }
                     }
 
                 });
 
-                getNextUserProfile(usersArray.pop());
+                currentExternalID = usersArray.pop();
+                getNextUserProfile(currentExternalID);
 
             })
             .catch(function(error) {
                 console.log("Error getting documents: ", error);
+                noMoreUsers();
+
             });
     }
 });
@@ -113,12 +114,25 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function notInterested() {
 
-    if (usersArray.length > 0) {
-        docID = usersArray.pop();
-        getNextUserProfile(docID);
+    if (usersArray.length >= 0) {
+
+        db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({
+
+            })
+            .then(function() {
+                console.log("Document successfully written!");
+                currentExternalID = usersArray.pop();
+                getNextUserProfile(currentExternalID);
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+                noMoreUsers();
+
+            });
+
     } else {
-        document.getElementById("usercard").classList.replace("d-block", "d-none");
-        document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
+        noMoreUsers();
+
     }
 
 }
@@ -129,13 +143,64 @@ function notInterested() {
 
 function interested() {
 
-    if (usersArray.length > 0) {
-        docID = usersArray.pop();
-        getNextUserProfile(docID);
+    if (usersArray.length >= 0) {
+        if (likesArray.includes(uid)) {
+            addUserLike();
+            alert("Matched user");
+
+            /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
+
+            currentExternalID = usersArray.pop();
+            getNextUserProfile(currentExternalID);
+
+        } else {
+            addUserLike();
+        }
     } else {
-        document.getElementById("usercard").classList.replace("d-block", "d-none");
-        document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
+        noMoreUsers();
     }
+}
+
+function noMoreUsers() {
+    document.getElementById("usercard").classList.replace("d-block", "d-none");
+    document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
+}
+
+
+function addUserLike() {
+
+    db.collection("users").doc(uid).collection("likes").doc(currentExternalID).set({
+
+        })
+        .then(function() {
+            console.log("Document successfully written!");
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+
+    addUserSeen();
+
+}
+
+function addUserSeen() {
+
+    db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({
+
+        })
+        .then(function() {
+            console.log("Document successfully written!");
+            if (usersArray.length > 0) {
+                currentExternalID = usersArray.pop();
+                getNextUserProfile(currentExternalID);
+            } else {
+                noMoreUsers();
+            }
+
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
 }
 
 
@@ -152,16 +217,33 @@ function getNextUserProfile(docID) {
             } else {
                 document.getElementById("userimage").src = "images/main/placeholderimage.jpg";
             }
+
+            likesArray = [];
+            db.collection("users").doc(docID).collection("likes").get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        if (doc.id == uid) {
+                            likesArray.push(doc.id);
+                        }
+                    })
+
+                });
             // document.getElementById("bio").innerText = doc.data().bio;
             // document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
             // document.getElementById("campus").innerText = "BCIT | BURNABY";
         } else {
             // doc.data() will be undefined in this case
+            noMoreUsers();
+
             console.log("No such document!");
         }
     }).catch(function(error) {
         console.log("Error getting document:", error);
+        noMoreUsers();
+
     });
+
+
 }
 
 /**
