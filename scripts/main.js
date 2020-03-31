@@ -2,6 +2,7 @@
  * @desc add onClick to buttons
  */
 let uid;
+let thisUser;
 let usersArray = [];
 let hasSeenArray = [];
 let likesArray = [];
@@ -11,14 +12,9 @@ function init() {
     document.getElementById("logoutButton").onclick = logout;
     document.getElementById("interestedButton").onclick = interested;
     document.getElementById("notInterestedButton").onclick = notInterested;
-
-
-
-
 }
 
 init();
-
 
 /**
  * @desc log out current logged in user.
@@ -39,8 +35,10 @@ function logout() {
  * @desc get user info from database and display it on a card.
  */
 firebase.auth().onAuthStateChanged(function(user) {
+    debugger;
     if (user) {
         // User is signed in.
+        thisUser = user;
         var displayName = user.displayName;
         var email = user.email;
         var emailVerified = user.emailVerified;
@@ -149,9 +147,11 @@ function interested() {
             alert("Matched user");
 
             /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
-
+            
             currentExternalID = usersArray.pop();
             getNextUserProfile(currentExternalID);
+
+            updateChats();
 
         } else {
             addUserLike();
@@ -259,4 +259,31 @@ function calculateAge(dob) {
     console.log(((now - dob) / 86400000) / 365);
     return Math.trunc(((now - dob) / 86400000) / 365);
 
+}
+
+function updateChats() {
+    let chatRef = db.collection("chats");
+    let chatIdRef = chatRef.doc();
+    let chatId = chatIdRef.id;   
+    
+    updateUser(thisUser, chatId);
+    updateUser(currentExternalID, chatId);
+}
+
+function updateUser(user, chatId) {
+    let chatIdRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
+
+    chatIdRef.get().then(function(doc) {
+        if (doc.exists) {
+            chatIdRef.update({
+                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+            })
+        } else {
+            chatIdRef.set({
+                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+            })
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 }

@@ -8,14 +8,16 @@ let elements = [];
 // HTML DOM Methods     //
 //======================//
 
-function createMessages() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            let numMessages = getNumMessages(user);
-        } else {
-            alert("You're not logged in!");
-        }
-    })
+function createMessages(user) {
+    
+    let numMessages = getNumMessages(user);
+
+    for (let i = 0; i < numMessages; i++) {
+        createElements();
+        setAttributes();
+        setValues(user);
+        appendElements();
+    }
 }
 
 function createElements() {
@@ -49,8 +51,8 @@ function appendElements() {
     elements[3].appendChild(elements[4]);
     elements[3].appendChild(elements[5]);
     
-    document.getElementsByClassName("container").appendChild(elements[1]);
-    document.getElementsByClassName("container").appendChild(elements[3]);
+    document.getElementById("messageListItems").appendChild(elements[1]);
+    document.getElementById("messageListItems").appendChild(elements[3]);
 }
 
 //======================//
@@ -61,26 +63,29 @@ function appendElements() {
 
 function getNumMessages(user) {
     let numMessages = 0;
-    let userRef = db.collection("users").doc(user.id);
+    let userRef = db.collection("users").doc(user.uid);
 
     userRef.get().then(function(doc) {
+        console.log(doc.data().numMessages);
         if ((doc.numMessages) != null) {
             numMessages = doc.numMessages;
-
-            for (let i = 0; i < numMessages; i++) {
-                createElements();
-                setAttributes();
-                setValues(user);
-                appendElements();
-            }
         }
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
+
+    return numMessages;
 }
 
 //======================//
 // Function Calls       //
 //======================//
 
-createMessages();
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        
+        createMessages(user);
+    } else {
+        alert("You're not logged in!");
+    }
+})
