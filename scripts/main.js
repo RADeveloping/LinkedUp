@@ -144,7 +144,12 @@ function interested() {
     if (usersArray.length >= 0) {
         if (likesArray.includes(uid)) {
             addUserLike();
-            alert("Matched user");
+            Swal.fire(
+                'Matched!',
+                'You have been matched with the user!',
+                'success'
+              )
+//            alert("Matched user");
 
             /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
             
