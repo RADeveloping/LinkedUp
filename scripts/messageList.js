@@ -3,6 +3,7 @@
 //======================//
 
 let elements = [];
+let list = [];
 
 //======================//
 // HTML DOM Methods     //
@@ -14,9 +15,9 @@ function createMessages(user) {
 
     docRef.onSnapshot(function(doc) {
         numMessages = parseInt(doc.data().id.length);
+        console.log(numMessages);
 
         for (let i = 0; i < numMessages; i++) {
-            // TODO: Use Promises so these execute in sequence properly.
             createElements();
             setAttributes();
             setValues(user);
@@ -55,13 +56,14 @@ function setValues(user) {
 
         httpsReference.getDownloadURL().then(function(newURL) {
             elements[2].src = newURL;
-            elements[4].innerHTML = "Other user's name"
-            elements[5].innerHTML = "Preview message."
         });  
     });
+
+    elements[4].innerHTML = "Other user's name"
+    elements[5].innerHTML = "Preview message."
 }
 
-function appendElements() {
+function appendElements(promisedElements) {
     elements[1].appendChild(elements[2]);
     elements[3].appendChild(elements[4]);
     elements[3].appendChild(elements[5]);
@@ -77,14 +79,6 @@ function appendElements() {
 // Firebase             //
 // Cloud Firestore      //
 // Functions            //
-//======================//
-
-function getNumMessages(user) {
-    
-}
-
-//======================//
-// Function Calls       //
 //======================//
 
 firebase.auth().onAuthStateChanged(function(user) {
