@@ -9,15 +9,20 @@ let elements = [];
 //======================//
 
 function createMessages(user) {
-    
-    let numMessages = getNumMessages(user);
+    let numMessages = 0;
+    let docRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
 
-    for (let i = 0; i < numMessages; i++) {
-        createElements();
-        setAttributes();
-        setValues(user);
-        appendElements();
-    }
+    docRef.onSnapshot(function(doc) {
+        numMessages = parseInt(doc.data().id.length);
+        console.log("numMessages: " + numMessages);
+
+        for (let i = 0; i < numMessages; i++) {
+            createElements();
+            setAttributes();
+            setValues(user);
+            appendElements();
+        }
+    })  
 }
 
 function createElements() {
@@ -62,19 +67,7 @@ function appendElements() {
 //======================//
 
 function getNumMessages(user) {
-    let numMessages = 0;
-    let userRef = db.collection("users").doc(user.uid);
-
-    userRef.get().then(function(doc) {
-        console.log(doc.data().numMessages);
-        if ((doc.numMessages) != null) {
-            numMessages = doc.numMessages;
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
-
-    return numMessages;
+    
 }
 
 //======================//
