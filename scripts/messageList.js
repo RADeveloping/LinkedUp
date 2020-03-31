@@ -3,25 +3,35 @@
 //======================//
 
 let elements = [];
+let list = [];
 
 //======================//
 // HTML DOM Methods     //
 //======================//
 
 function createMessages(user) {
+    let promises = [];
     let numMessages = 0;
     let docRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
+    let chatId;
 
     docRef.onSnapshot(function(doc) {
         numMessages = parseInt(doc.data().id.length);
-        console.log("numMessages: " + numMessages);
 
         for (let i = 0; i < numMessages; i++) {
+            chatId = doc.data().id[i];
+            
             createElements();
-            setAttributes();
-            setValues(user);
+            setAttributes(chatId);
+            const promiseSetValues = new Promise((resolve, reject) => {
+                setValues(user, chatId);
+                resolve();
+            });
+            promises.push(promiseSetValues);
             appendElements();
         }
+
+        Promise.all(promises);
     })  
 }
 
@@ -35,29 +45,44 @@ function createElements() {
     elements[6] = document.createElement("a");
 }
 
-function setAttributes() {
+function setAttributes(chatId) {
     elements[0].setAttribute("class", "row align-items-center py-1"); 
     elements[1].setAttribute("class", "col-3"); 
     elements[2].setAttribute("class", "img-fluid rounded-circle"); 
+    elements[2].setAttribute("id", chatId);
     elements[3].setAttribute("class", "col"); 
     elements[4].setAttribute("class", "messageList_user"); 
     elements[5].setAttribute("class", "preview"); 
     elements[6].setAttribute("class", "stretched-link"); 
+
+    elements[6].src = "messageUser.html";
 }
 
-function setValues(user) {
-    elements[2].src = user.photoURL; // other user's profile pic
+function setValues(user, chatId) {
+    let docRef = db.collection("users").doc(user.uid);
+
+    docRef.onSnapshot(function(doc) {
+        let httpsReference = storage.refFromURL(doc.data().photoURL);
+
+        httpsReference.getDownloadURL().then(function(newURL) {
+            document.getElementById(chatId).src = newURL;
+        });  
+    });
+
     elements[4].innerHTML = "Other user's name"
-    elements[5].innerHTML = "Preview message."  
+    elements[5].innerHTML = "Preview message."
 }
 
-function appendElements() {
+function appendElements(promisedElements) {
     elements[1].appendChild(elements[2]);
     elements[3].appendChild(elements[4]);
     elements[3].appendChild(elements[5]);
+
+    elements[0].appendChild(elements[1]);
+    elements[0].appendChild(elements[3]);
+    elements[0].appendChild(elements[6]);
     
-    document.getElementById("messageListItems").appendChild(elements[1]);
-    document.getElementById("messageListItems").appendChild(elements[3]);
+    document.getElementById("messageListItems").appendChild(elements[0]);
 }
 
 //======================//
@@ -66,17 +91,8 @@ function appendElements() {
 // Functions            //
 //======================//
 
-function getNumMessages(user) {
-    
-}
-
-//======================//
-// Function Calls       //
-//======================//
-
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        
         createMessages(user);
     } else {
         alert("You're not logged in!");
