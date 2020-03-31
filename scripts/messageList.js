@@ -14,9 +14,9 @@ function createMessages(user) {
 
     docRef.onSnapshot(function(doc) {
         numMessages = parseInt(doc.data().id.length);
-        console.log("numMessages: " + numMessages);
 
         for (let i = 0; i < numMessages; i++) {
+            // TODO: Use Promises so these execute in sequence properly.
             createElements();
             setAttributes();
             setValues(user);
@@ -43,21 +43,34 @@ function setAttributes() {
     elements[4].setAttribute("class", "messageList_user"); 
     elements[5].setAttribute("class", "preview"); 
     elements[6].setAttribute("class", "stretched-link"); 
+
+    elements[6].src = "messageUser.html";
 }
 
 function setValues(user) {
-    elements[2].src = user.photoURL; // other user's profile pic
-    elements[4].innerHTML = "Other user's name"
-    elements[5].innerHTML = "Preview message."  
+    let docRef = db.collection("users").doc(user.uid);
+
+    docRef.onSnapshot(function(doc) {
+        let httpsReference = storage.refFromURL(doc.data().photoURL);
+
+        httpsReference.getDownloadURL().then(function(newURL) {
+            elements[2].src = newURL;
+            elements[4].innerHTML = "Other user's name"
+            elements[5].innerHTML = "Preview message."
+        });  
+    });
 }
 
 function appendElements() {
     elements[1].appendChild(elements[2]);
     elements[3].appendChild(elements[4]);
     elements[3].appendChild(elements[5]);
+
+    elements[0].appendChild(elements[1]);
+    elements[0].appendChild(elements[3]);
+    elements[0].appendChild(elements[6]);
     
-    document.getElementById("messageListItems").appendChild(elements[1]);
-    document.getElementById("messageListItems").appendChild(elements[3]);
+    document.getElementById("messageListItems").appendChild(elements[0]);
 }
 
 //======================//
@@ -76,7 +89,6 @@ function getNumMessages(user) {
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        
         createMessages(user);
     } else {
         alert("You're not logged in!");
