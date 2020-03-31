@@ -10,19 +10,28 @@ let list = [];
 //======================//
 
 function createMessages(user) {
+    let promises = [];
     let numMessages = 0;
     let docRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
+    let chatId;
 
     docRef.onSnapshot(function(doc) {
         numMessages = parseInt(doc.data().id.length);
-        console.log(numMessages);
 
         for (let i = 0; i < numMessages; i++) {
+            chatId = doc.data().id[i];
+            
             createElements();
-            setAttributes();
-            setValues(user);
+            setAttributes(chatId);
+            const promiseSetValues = new Promise((resolve, reject) => {
+                setValues(user, chatId);
+                resolve();
+            });
+            promises.push(promiseSetValues);
             appendElements();
         }
+
+        Promise.all(promises);
     })  
 }
 
@@ -36,10 +45,11 @@ function createElements() {
     elements[6] = document.createElement("a");
 }
 
-function setAttributes() {
+function setAttributes(chatId) {
     elements[0].setAttribute("class", "row align-items-center py-1"); 
     elements[1].setAttribute("class", "col-3"); 
     elements[2].setAttribute("class", "img-fluid rounded-circle"); 
+    elements[2].setAttribute("id", chatId);
     elements[3].setAttribute("class", "col"); 
     elements[4].setAttribute("class", "messageList_user"); 
     elements[5].setAttribute("class", "preview"); 
@@ -48,14 +58,14 @@ function setAttributes() {
     elements[6].src = "messageUser.html";
 }
 
-function setValues(user) {
+function setValues(user, chatId) {
     let docRef = db.collection("users").doc(user.uid);
 
     docRef.onSnapshot(function(doc) {
         let httpsReference = storage.refFromURL(doc.data().photoURL);
 
         httpsReference.getDownloadURL().then(function(newURL) {
-            elements[2].src = newURL;
+            document.getElementById(chatId).src = newURL;
         });  
     });
 
