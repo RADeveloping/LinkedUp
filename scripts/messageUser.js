@@ -1,6 +1,7 @@
-//----------------------//
+//======================//
 // Constants            //
-//-----------------------//
+//======================//
+
 const MONTH = 
     ["January", "February", 
     "March", "April", 
@@ -9,15 +10,17 @@ const MONTH =
     "September", "October", 
     "November", "December"];
 
-//----------------------//
+//======================//
 // Global Variables     //
-//----------------------//
+//======================//
+
 let elements;
 let chatId;
 
-//----------------------//
+//======================//
 // Button Event         //
-//----------------------//
+//======================//
+
 function sendMessage() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -32,9 +35,10 @@ function sendMessage() {
     }) 
 }
 
-//----------------------//
+//======================//
 // HTML DOM Methods     //
-//----------------------//
+//======================//
+
 function createMessageDiv() {
     elements = [
         document.createElement("img"),
@@ -82,11 +86,12 @@ function appendElements() {
     elements[5].appendChild(elements[4]);
 }
 
-//----------------------//
+//======================//
 // Firebase             //
 // Cloud Firestore      //
 // Functions            //
-//----------------------//
+//======================//
+
 function updateChats(user) {
     let chatRef = db.collection("chats");
 
