@@ -54,8 +54,11 @@ function setAttributes(chatId) {
     elements[4].setAttribute("class", "messageList_user"); 
     elements[5].setAttribute("class", "preview"); 
     elements[6].setAttribute("class", "stretched-link"); 
+    elements[6].setAttribute("id", chatId);
+    elements[6].setAttribute("onclick", "setLocalStorage(this.id)");
 
-    elements[6].src = "messageUser.html";
+    //elements[6].href = "messageUser.html";
+    elements[6].href = "#";
 }
 
 function setValues(user, chatId) {
@@ -83,6 +86,11 @@ function appendElements(promisedElements) {
     elements[0].appendChild(elements[6]);
     
     document.getElementById("messageListItems").appendChild(elements[0]);
+}
+
+function setLocalStorage(chatId) {
+    localStorage.setItem("chatId", chatId);
+    console.log(localStorage.getItem("chatId"));
 }
 
 //======================//
