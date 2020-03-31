@@ -46,7 +46,7 @@ function setAttributes() {
 }
 
 function setValues(user) {
-    elements[2].src = user.photoURL;
+    elements[2].src = user.photoURL; // other user's profile pic
     elements[4].innerHTML = "Other user's name"
     elements[5].innerHTML = "Preview message."  
 }
