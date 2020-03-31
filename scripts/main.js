@@ -7,6 +7,7 @@ let usersArray = [];
 let hasSeenArray = [];
 let likesArray = [];
 let currentExternalID;
+let photoURL;
 
 function init() {
     document.getElementById("logoutButton").onclick = logout;
@@ -35,14 +36,13 @@ function logout() {
  * @desc get user info from database and display it on a card.
  */
 firebase.auth().onAuthStateChanged(function(user) {
-    debugger;
     if (user) {
         // User is signed in.
         thisUser = user;
         var displayName = user.displayName;
         var email = user.email;
         var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
+        photoURL = user.photoURL;
         var isAnonymous = user.isAnonymous;
         uid = user.uid;
         var providerData = user.providerData;
@@ -147,7 +147,7 @@ function interested() {
             alert("Matched user");
 
             /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
-            
+
             currentExternalID = usersArray.pop();
             getNextUserProfile(currentExternalID);
 
@@ -212,7 +212,7 @@ function getNextUserProfile(docID) {
             document.getElementById("firstName").innerText = doc.data().firstName;
             document.getElementById("age_campus").innerText = calculateAge(doc.data().dateOfBirth) + " " + "BCIT | BURNABY";
             document.getElementById("bio").innerText = doc.data().bio;
-            if (doc.data().photoURL.length > 10) {
+            if (doc.data().photoURL) {
                 document.getElementById("userimage").src = doc.data().photoURL;
             } else {
                 document.getElementById("userimage").src = "images/main/placeholderimage.jpg";
@@ -264,8 +264,8 @@ function calculateAge(dob) {
 function updateChats() {
     let chatRef = db.collection("chats");
     let chatIdRef = chatRef.doc();
-    let chatId = chatIdRef.id;   
-    
+    let chatId = chatIdRef.id;
+
     updateUser(thisUser, chatId);
     updateUser(currentExternalID, chatId);
 }
@@ -276,11 +276,11 @@ function updateUser(user, chatId) {
     chatIdRef.get().then(function(doc) {
         if (doc.exists) {
             chatIdRef.update({
-                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+                id: firebase.firestore.FieldValue.arrayUnion(chatId.toString())
             })
         } else {
             chatIdRef.set({
-                id : firebase.firestore.FieldValue.arrayUnion(chatId.toString())
+                id: firebase.firestore.FieldValue.arrayUnion(chatId.toString())
             })
         }
     }).catch(function(error) {

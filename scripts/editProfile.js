@@ -9,6 +9,10 @@ var myDropzone = new Dropzone("div#photoupload", {
     url: "/file/post",
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 4, // MB
+    resizeWidth: 600,
+    resizeHeight: 600,
+    resizeMethod: 'contain',
+    resizeQuality: 1.0,
     acceptedFiles: "image/*",
     capture: "image/*",
     thumbnail: function(file, dataUrl) {

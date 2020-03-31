@@ -1,10 +1,15 @@
 let profilePhotoFile;
 let profilePhotoDataUrl;
+let URLtoUpload;
 
 var myDropzone = new Dropzone("div#photoupload", {
     url: "/file/post",
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 4, // MB
+    resizeWidth: 600,
+    resizeHeight: 600,
+    resizeMethod: 'contain',
+    resizeQuality: 1.0,
     acceptedFiles: "image/*",
     capture: "image/*",
     thumbnail: function(file, dataUrl) {
@@ -45,6 +50,7 @@ function uploadPhotoToFirebase(file, dataUrl) {
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then((url) => {
             addPhotoToUserProfile(url);
+            URLtoUpload = url;
         })
         .catch(console.error);
 
@@ -168,7 +174,8 @@ function saveUserInfo() {
             lastName: document.getElementById("validationLastName").value,
             dateOfBirth: document.getElementById("validationDateOfBirth").value,
             bio: document.getElementById("bioTextBox").value,
-            email: user.email
+            email: user.email,
+            photoURL: URLtoUpload
         }).then(function() {
             console.log("Updated information!");
             window.location.assign("main.html");
