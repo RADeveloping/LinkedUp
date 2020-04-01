@@ -42,23 +42,18 @@ function createElements() {
     elements[3] = document.createElement("div");
     elements[4] = document.createElement("h2");
     elements[5] = document.createElement("p");
-    elements[6] = document.createElement("a");
 }
 
 function setAttributes(chatId) {
-    elements[0].setAttribute("class", "row align-items-center py-1"); 
+    elements[0].setAttribute("class", "row align-items-center py-1");
+    elements[0].style.cursor = "pointer"; 
+    elements[0].setAttribute("onclick", "messageClick(\"" + chatId + "\")");
     elements[1].setAttribute("class", "col-3"); 
     elements[2].setAttribute("class", "img-fluid rounded-circle"); 
     elements[2].setAttribute("id", chatId);
     elements[3].setAttribute("class", "col"); 
     elements[4].setAttribute("class", "messageList_user"); 
     elements[5].setAttribute("class", "preview"); 
-    elements[6].setAttribute("class", "stretched-link"); 
-    elements[6].setAttribute("id", chatId);
-    elements[6].setAttribute("onclick", "setLocalStorage(this.id)");
-
-    //elements[6].href = "messageUser.html";
-    elements[6].href = "#";
 }
 
 function setValues(user, chatId) {
@@ -83,15 +78,15 @@ function appendElements(promisedElements) {
 
     elements[0].appendChild(elements[1]);
     elements[0].appendChild(elements[3]);
-    elements[0].appendChild(elements[6]);
     
     document.getElementById("messageListItems").appendChild(elements[0]);
 }
 
-function setLocalStorage(chatId) {
+function messageClick(chatId) {
     localStorage.setItem("chatId", chatId);
-    console.log(localStorage.getItem("chatId"));
+    window.open("messageUser.html", "_self");
 }
+
 
 //======================//
 // Firebase             //
