@@ -14,7 +14,7 @@
     <!----------------------------------------------->
     <!--  EXTERNAL CSS AND JS -->
     <!----------------------------------------------->
-    
+
     <script src="scripts/sweetAlert/sweetalert2.all.min.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
@@ -25,7 +25,6 @@
     <!--  INTERNAL CSS AND JS -->
     <!----------------------------------------------->
 
-    <link href="css/login/floating-labels.css" rel="stylesheet">
     <link href="css/main/style.css" rel="stylesheet">
 
 </head>
@@ -51,19 +50,19 @@
     <!--  NAVIGATION BAR -->
     <!----------------------------------------------->
 
-    <nav class="navbar navbar-expand bg-light navbar-light fixed-top" id="mainNav">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand bg-light navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
             <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+          <span class="navbar-toggler-icon"></span>
+        </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="messagelist.html">Messages</a>
+                        <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
@@ -72,43 +71,42 @@
             </div>
         </div>
     </nav>
-    <!----------------------------------------------->
-    <!--  FOOTER BAR -->
-    <!----------------------------------------------->
-    <footer class="footer">
-        <p>
-            <!---put footer text here-->Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum mollitia iure odit quas odio deserunt amet, nisi voluptates aperiam non molestiae labore voluptatibus voluptatum, a nihil, delectus omnis aspernatur? Voluptate?</p>
-    </footer>
+
+
+
 
     <!----------------------------------------------->
     <!--  MAIN USER CARD SECTION -->
     <!----------------------------------------------->
 
-
-    <div class="card d-block" style="width: 80%;" id="usercard">
-        <div class="row">
-            <div class="col-md-5">
-                <img src="images/main/placeholderimage.jpg" class="card-img-flex" style="max-width: 100%; max-height: 400px;" alt="User image" id="userimage">
-            </div>
-            <div class="col-md-7">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title" id="firstName">Loading..</h5>
-                            <h6 class="card-title" id="age_campus">Loading..</h5>
+    <div class="container text-center">
+        <div class="card d-block" style="width: 100%;" id="usercard">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="images/main/placeholderimage.jpg" class="card-img-flex" style="max-width: 100%; max-height: 100%;" alt="User image" id="userimage">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title" id="firstName">Loading..</h5>
+                                <h6 class="card-title" id="age_campus">Loading..</h5>
+                            </div>
                         </div>
-                    </div>
-                    <p class="card-text" id="bio">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="mt-auto">
-                        <button type="button" class="btn btn-success" id="interestedButton">INTERESTED</button>
-                        <button type="button" class="btn btn-danger" id="notInterestedButton">NOT INTERESTED</button>
+                        <p class="card-text" id="bio">Loadnig.</p>
+                        <div class="mt-auto">
+                            <button type="button" class="btn btn-success" id="interestedButton">INTERESTED</button>
+                            <button type="button" class="btn btn-danger" id="notInterestedButton">NOT INTERESTED</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
+    <footer class="footer">
+        <p>Copyright 2020 - LinkedUp</p>
+    </footer>
     <!----------------------------------------------->
     <!--  NO MORE USERS TO SHOW VIEW  -->
     <!----------------------------------------------->

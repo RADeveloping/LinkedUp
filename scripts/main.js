@@ -226,9 +226,9 @@ function calculateAge(dob) {
     let dobSplit = dob.split("/");
 
     let now = new Date(2020, 03, 24);
-    let dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
-    console.log(((now - dob) / 86400000) / 365);
-    return Math.trunc(((now - dob) / 86400000) / 365);
+    let dobNew = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
+    console.log(((now - dobNew) / 86400000) / 365);
+    return Math.trunc(((now - dobNew) / 86400000) / 365);
 
 }
 
