@@ -5,7 +5,7 @@ let tempPhotoURL;
 /**
  * @desc creates a new drop zone to upload image
  */
-var myDropzone = new Dropzone("div#photoupload", {
+let myDropzone = new Dropzone("div#photoupload", {
     url: "/file/post",
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 4, // MB
@@ -18,9 +18,9 @@ var myDropzone = new Dropzone("div#photoupload", {
     thumbnail: function(file, dataUrl) {
         if (file.previewElement) {
             file.previewElement.classList.remove("dz-file-preview");
-            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-            for (var i = 0; i < images.length; i++) {
-                var thumbnailElement = images[i];
+            let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+            for (let i = 0; i < images.length; i++) {
+                let thumbnailElement = images[i];
                 thumbnailElement.alt = file.name;
                 thumbnailElement.src = dataUrl;
             }
@@ -106,7 +106,7 @@ function loadUserInfo(user) {
     let email = document.getElementById("validationCustomEmail");
     let userProfileImage = document.getElementById("profileimage");
 
-    var docRef = db.collection("users").doc(user.uid)
+    let docRef = db.collection("users").doc(user.uid)
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
@@ -116,7 +116,7 @@ function loadUserInfo(user) {
             bio.value = doc.data().bio;
             email.value = user.email;
 
-            var httpsReference = storage.refFromURL(doc.data().photoURL);
+            let httpsReference = storage.refFromURL(doc.data().photoURL);
             httpsReference.getDownloadURL().then(function(newURL) {
                 // Or inserted into an <img> element:
                 userProfileImage.src = newURL;
@@ -147,9 +147,9 @@ function loadUserInfo(user) {
     window.addEventListener('load', function() {
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('form-completeRegistration');
+        let forms = document.getElementsByClassName('form-completeRegistration');
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
+        let validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
@@ -179,9 +179,9 @@ function saveUserInfo() {
     document.getElementById("completeRegistrationButton").disabled = true;
     document.getElementById("completeRegistrationButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
-    var user = firebase.auth().currentUser;
+    let user = firebase.auth().currentUser;
 
-    var docRef = db.collection("users").doc(user.uid)
+    let docRef = db.collection("users").doc(user.uid)
     docRef.get().then(function(doc) {
         if (doc.exists) {
 

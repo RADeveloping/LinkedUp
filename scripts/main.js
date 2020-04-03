@@ -1,6 +1,5 @@
-/**
- * @desc add onClick to buttons
- */
+// DECLARE VARIABLES 
+
 let uid;
 let thisUser;
 let usersArray = [];
@@ -9,6 +8,9 @@ let likesArray = [];
 let currentExternalID;
 let photoURL;
 
+/**
+ * @desc add onClick to buttons
+ */
 function init() {
     document.getElementById("logoutButton").onclick = logout;
     document.getElementById("interestedButton").onclick = interested;
@@ -27,9 +29,8 @@ function logout() {
             window.location.assign("login.html");
         })
         .catch(function(err) {
-            // Handle errors
+            alert(err);
         });
-
 }
 
 /**
@@ -39,37 +40,12 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         // User is signed in.
         thisUser = user;
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
         photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
         uid = user.uid;
-        var providerData = user.providerData;
 
-        //     // GET USER PROFILE 
-        //     var docRef = db.collection("users").doc(user.uid)
-        //     docRef.get().then(function(doc) {
-        //         if (doc.exists) {
-        //             document.getElementById("firstName").innerText = doc.data().firstName;
-        //             document.getElementById("firstNameHover").innerText = doc.data().firstName;;
-        //             document.getElementById("bio").innerText = doc.data().bio;
-        //             document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
-        //             document.getElementById("campus").innerText = "BCIT | BURNABY";
-        //         } else {
-        //             // doc.data() will be undefined in this case
-        //             console.log("No such document!");
-        //         }
-        //     }).catch(function(error) {
-        //         console.log("Error getting document:", error);
-        //     });
-
-
-        let docID;
         let docRef = db.collection("users").doc(user.uid).collection("hasSeen").get()
             .then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
                     hasSeenArray.push(doc.id);
                 });
             })
@@ -82,18 +58,14 @@ firebase.auth().onAuthStateChanged(function(user) {
             .get()
             .then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
                     if (doc.id != user.uid) {
                         if (!hasSeenArray.includes(doc.id)) {
                             usersArray.push(doc.id);
                         }
                     }
-
                 });
-
                 currentExternalID = usersArray.pop();
                 getNextUserProfile(currentExternalID);
-
             })
             .catch(function(error) {
                 console.log("Error getting documents: ", error);
@@ -109,7 +81,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 /**
  * @desc user selected not interested
  */
-
 function notInterested() {
 
     if (usersArray.length >= 0) {
@@ -125,7 +96,6 @@ function notInterested() {
             .catch(function(error) {
                 console.error("Error writing document: ", error);
                 noMoreUsers();
-
             });
 
     } else {
@@ -138,9 +108,7 @@ function notInterested() {
 /**
  * @desc user selected interested.
  */
-
 function interested() {
-
     if (usersArray.length >= 0) {
         if (likesArray.includes(uid)) {
             addUserLike();
@@ -148,11 +116,9 @@ function interested() {
                 'Matched!',
                 'You have been matched with the user!',
                 'success'
-              )
-//            alert("Matched user");
+            )
 
             /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
-
             currentExternalID = usersArray.pop();
             getNextUserProfile(currentExternalID);
 
@@ -166,14 +132,18 @@ function interested() {
     }
 }
 
+/**
+ * @desc no more users to show, display placeholder text!
+ */
 function noMoreUsers() {
     document.getElementById("usercard").classList.replace("d-block", "d-none");
     document.getElementById("noMoreUsers").classList.replace("d-none", "d-block");
 }
 
-
+/**
+ * @desc add users like to Firebase
+ */
 function addUserLike() {
-
     db.collection("users").doc(uid).collection("likes").doc(currentExternalID).set({
 
         })
@@ -185,11 +155,12 @@ function addUserLike() {
         });
 
     addUserSeen();
-
 }
 
+/**
+ * @desc add user seen to firebase
+ */
 function addUserSeen() {
-
     db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({
 
         })
@@ -208,7 +179,10 @@ function addUserSeen() {
         });
 }
 
-
+/**
+ * @desc Get the next user profile with give docID.
+ * @param docID the next docID used to get next user.
+ */
 function getNextUserProfile(docID) {
     // GET USER PROFILE 
     let docRef = db.collection("users").doc(docID)
@@ -233,22 +207,14 @@ function getNextUserProfile(docID) {
                     })
 
                 });
-            // document.getElementById("bio").innerText = doc.data().bio;
-            // document.getElementById("age").innerText = "AGE | " + calculateAge(doc.data().dateOfBirth);
-            // document.getElementById("campus").innerText = "BCIT | BURNABY";
         } else {
-            // doc.data() will be undefined in this case
             noMoreUsers();
-
             console.log("No such document!");
         }
     }).catch(function(error) {
         console.log("Error getting document:", error);
         noMoreUsers();
-
     });
-
-
 }
 
 /**
@@ -257,15 +223,18 @@ function getNextUserProfile(docID) {
  * @returns int the age of the user.
  */
 function calculateAge(dob) {
-    var dobSplit = dob.split("/");
+    let dobSplit = dob.split("/");
 
-    var now = new Date(2020, 03, 24);
-    var dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
+    let now = new Date(2020, 03, 24);
+    let dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
     console.log(((now - dob) / 86400000) / 365);
     return Math.trunc(((now - dob) / 86400000) / 365);
 
 }
 
+/**
+ * @desc updates the chats for the user
+ */
 function updateChats() {
     let chatRef = db.collection("chats");
     let chatIdRef = chatRef.doc();
@@ -275,6 +244,11 @@ function updateChats() {
     updateUser(currentExternalID, chatId);
 }
 
+/**
+ * @desc Update the user and their chat id
+ * @param user the user currently logged in
+ * @param chatId the chat ID for the user.
+ */
 function updateUser(user, chatId) {
     let chatIdRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
 

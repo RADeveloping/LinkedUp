@@ -2,7 +2,7 @@ let profilePhotoFile;
 let profilePhotoDataUrl;
 let URLtoUpload;
 
-var myDropzone = new Dropzone("div#photoupload", {
+let myDropzone = new Dropzone("div#photoupload", {
     url: "/file/post",
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 4, // MB
@@ -15,9 +15,9 @@ var myDropzone = new Dropzone("div#photoupload", {
     thumbnail: function(file, dataUrl) {
         if (file.previewElement) {
             file.previewElement.classList.remove("dz-file-preview");
-            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-            for (var i = 0; i < images.length; i++) {
-                var thumbnailElement = images[i];
+            let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+            for (let i = 0; i < images.length; i++) {
+                let thumbnailElement = images[i];
                 thumbnailElement.alt = file.name;
                 thumbnailElement.src = dataUrl;
             }
@@ -64,7 +64,7 @@ function uploadPhotoToFirebase(file, dataUrl) {
  */
 function addPhotoToUserProfile(url) {
 
-    var user = firebase.auth().currentUser;
+    let user = firebase.auth().currentUser;
 
     user.updateProfile({
         displayName: document.getElementById("validationFirstName").value
@@ -122,9 +122,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     window.addEventListener('load', function() {
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('form-completeRegistration');
+        let forms = document.getElementsByClassName('form-completeRegistration');
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
+        let validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
                 if (form.checkValidity() === false || calculateAge(document.getElementById("validationDateOfBirth").value) <= 17) {
                     event.preventDefault();
@@ -164,8 +164,7 @@ function saveUserInfo() {
     document.getElementById("completeRegistrationButton").disabled = true;
     document.getElementById("completeRegistrationButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
 
-
-    var user = firebase.auth().currentUser;
+    let user = firebase.auth().currentUser;
     user.updateProfile({
         displayName: document.getElementById("validationFirstName").value
     }).then(function() {
@@ -199,10 +198,10 @@ function saveUserInfo() {
  * @returns int the age of the user.
  */
 function calculateAge(dob) {
-    var dobSplit = dob.split("/");
+    let dobSplit = dob.split("/");
 
-    var now = new Date(2020, 03, 24);
-    var dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
+    let now = new Date(2020, 03, 24);
+    let dob = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
     console.log(((now - dob) / 86400000) / 365);
     return Math.trunc(((now - dob) / 86400000) / 365);
 }
