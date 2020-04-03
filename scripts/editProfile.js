@@ -127,8 +127,6 @@ function loadUserInfo(user) {
 
             });
 
-
-            //  userProfileImage.src = a;
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -198,6 +196,14 @@ function saveUserInfo() {
         console.log("Error getting document:", error);
     });
 
+    updateProfile(user);
+}
+
+/**
+ * @desc update user information on firebase
+ * @param user the current loged in user
+ */
+function updateProfile(user) {
     user.updateProfile({
         displayName: document.getElementById("validationFirstName").value
     }).then(function() {
@@ -224,6 +230,4 @@ function saveUserInfo() {
         document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
         document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
     });
-
-
 }

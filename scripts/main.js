@@ -53,7 +53,6 @@ firebase.auth().onAuthStateChanged(function(user) {
                 console.log("Error getting documents: ", error);
             });
 
-
         db.collection("users")
             .get()
             .then(function(querySnapshot) {

@@ -20,7 +20,7 @@ function createMessages(user) {
 
         for (let i = 0; i < numMessages; i++) {
             chatId = doc.data().id[i];
-            
+
             createElements();
             setAttributes(chatId);
             const promiseSetValues = new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ function createMessages(user) {
         }
 
         Promise.all(promises);
-    })  
+    })
 }
 
 function createElements() {
@@ -46,14 +46,14 @@ function createElements() {
 
 function setAttributes(chatId) {
     elements[0].setAttribute("class", "row align-items-center py-1");
-    elements[0].style.cursor = "pointer"; 
+    elements[0].style.cursor = "pointer";
     elements[0].setAttribute("onclick", "messageClick(\"" + chatId + "\")");
-    elements[1].setAttribute("class", "col-3"); 
-    elements[2].setAttribute("class", "img-fluid rounded-circle"); 
+    elements[1].setAttribute("class", "col-3");
+    elements[2].setAttribute("class", "img-fluid rounded-circle");
     elements[2].setAttribute("id", chatId);
-    elements[3].setAttribute("class", "col"); 
-    elements[4].setAttribute("class", "messageList_user"); 
-    elements[5].setAttribute("class", "preview"); 
+    elements[3].setAttribute("class", "col");
+    elements[4].setAttribute("class", "messageList_user");
+    elements[5].setAttribute("class", "preview");
 }
 
 function setValues(user, chatId) {
@@ -64,7 +64,7 @@ function setValues(user, chatId) {
 
         httpsReference.getDownloadURL().then(function(newURL) {
             document.getElementById(chatId).src = newURL;
-        });  
+        });
     });
 
     elements[4].innerHTML = "Other user's name"
@@ -78,7 +78,7 @@ function appendElements(promisedElements) {
 
     elements[0].appendChild(elements[1]);
     elements[0].appendChild(elements[3]);
-    
+
     document.getElementById("messageListItems").appendChild(elements[0]);
 }
 
