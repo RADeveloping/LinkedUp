@@ -6,7 +6,7 @@
  */
 function addHandlerToLoginButton() {
 
-    let index_login = document.getElementById("index_login").onclick = loginPressed;
+    document.getElementById("index_login").onclick = loginPressed;
 }
 
 /**
