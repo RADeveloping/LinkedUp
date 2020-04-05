@@ -5,19 +5,14 @@ expanding their network beyond their set and/or program. This application will a
 
 This small project demonstrates:
 
-Read and write to firestore, a non-sql databaseUse of firebase authentication and creation of a users collection in firestore
-
-Custom login and sign up experience with the ability to upload profile photo.
-
-Customized user experience after login/signup
-
-Showing profiles of other users.
-
-Use of navbar in boostrap
-
-The ability for a user to edit their profile.
-
-The ability to direct message another matched user.
+- Read and write to firestore, a non-sql database
+- Use of firebase authentication and creation of a users collection in firestore
+- Custom login and sign up experience with the ability to upload profile photo.
+- Customized user experience after login/signup
+- Showing profiles of other users.
+- Use of navbar in boostrap
+- The ability for a user to edit their profile.
+- The ability to direct message another matched user.
 
 ## Getting Started
 
@@ -32,9 +27,8 @@ Simply register with an "@my.bcit.ca" email and start looking at potential conne
 * [Firebase](https://firebase.google.com) - Used as the backend storage and Database
 
 Some other technologies that were used for this project:
-HTML, CSS
-JavaScript
-Bootstrap
+- HTML, CSS
+- JavaScript
 
 ## Authors
 
