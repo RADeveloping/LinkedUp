@@ -56,8 +56,6 @@ function uploadPhotoToFirebase(file, dataUrl) {
 
 }
 
-
-
 /**
  * @desc adds photo to Firstore
  * @param url string

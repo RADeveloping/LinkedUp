@@ -87,7 +87,9 @@ function logout() {
 
 }
 
-
+/**
+ * @desc Check user state.
+ */
 firebase.auth().onAuthStateChanged(function(user) {
 
     loadUserInfo(user);
@@ -96,6 +98,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 /**
  * @desc loads user information from Firebase
+ * @param user the current logged in user.
  */
 function loadUserInfo(user) {
 
@@ -128,7 +131,6 @@ function loadUserInfo(user) {
             });
 
         } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
         }
     }).catch(function(error) {
