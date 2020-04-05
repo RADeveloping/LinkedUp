@@ -16,14 +16,10 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
 
         } else {
-            // user fully registred 
+            // user fully registered, reasign page. 
             window.location.assign("main.html");
-
         }
-
     }
-
-
 });
 
 /**
@@ -38,7 +34,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         let forms = document.getElementsByClassName('form-signin');
         // Loop over them and prevent submission
         Array.prototype.filter.call(forms, function(form) {
-
             form.addEventListener('input', function(event) {
                 if (form[0].checkValidity() === false) {
                     event.stopPropagation();
@@ -72,18 +67,18 @@ firebase.auth().onAuthStateChanged(function(user) {
                 event.preventDefault();
                 if (form[0].checkValidity() === false) {
                     event.stopPropagation();
-
                 }
 
                 if (form[0].checkValidity() === true && form[1].checkValidity() === false) {
                     console.log("success");
                     document.getElementById("nextButton").disabled = true;
                     document.getElementById("nextButton").innerHTML = '<span class="spinner-border spinner-border-sm mr-2 disabled" role="status" aria-hidden="true"></span>Loading...';
-
+                    // Check if user exists or not
                     checkIfUserExists();
                 }
 
                 form.classList.add('was-validated');
+
             }, false);
         });
 
@@ -97,16 +92,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 function checkIfUserExists() {
 
     let email = document.getElementById("validationCustomEmail").value;
-
     db.collection("users").where("email", "==", email)
         .get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
                 if (querySnapshot.size > 0) {
                     userFound();
-
                 }
-
             });
             if (querySnapshot.size == 0) {
                 userNotFound();
@@ -139,37 +131,27 @@ function loginUser() {
                 document.getElementById("invalidPassword").innerHTML = "Oops! " + error.message
                 document.getElementById("loginButton").innerHTML = "Login";
         }
-
     });
-
 }
 
 /**
  * @desc incorrect password. Hides and shows DOM Elements.
  */
-
 function displayIncorrectPassword() {
-
     document.getElementById("invalidPassword").classList.replace("d-none", "d-block");
     document.getElementById("invalidPassword").innerHTML = "Oops! incorrect password, try again!"
     document.getElementById("loginButton").innerHTML = "Login";
-
 }
 
 /**
  * @desc user found. Hides and shows DOM Elements.
  */
 function userFound() {
-
-    console.log("Userfound");
     document.getElementById("validationCustomEmail").readOnly = true;
     document.getElementById("nextButton").classList.add("d-none");
     document.getElementById("loginButton").classList.add("d-block");
     document.getElementById("passwordGroup").classList.replace("d-none", "d-block");
     document.getElementById("signupButton").classList.replace("d-block", "d-done");
-
-
-
 }
 
 /**
@@ -180,13 +162,9 @@ function userNotFound() {
 
     document.getElementById("validationCustomEmail").readOnly = true;
     document.getElementById("nextButton").classList.add("d-none");
-    //document.getElementById("loginButton").classList.add("d-block");
     document.getElementById("passwordGroup").classList.replace("d-none", "d-block");
     document.getElementById("signupButton").classList.replace("d-none", "d-block");
     document.getElementById("signupButton").disabled = true;
-
-
-
 }
 
 /**
@@ -200,7 +178,6 @@ function registerUser() {
 
     let email = document.getElementById("validationCustomEmail").value;
     let password = document.getElementById("validationCustomPassword").value;
-    console.log(email + ":" + password);
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .catch(function(error) {

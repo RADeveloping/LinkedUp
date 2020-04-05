@@ -53,7 +53,6 @@ function uploadPhotoToFirebase(file, dataUrl) {
             URLtoUpload = url;
         })
         .catch(console.error);
-
 }
 
 /**
@@ -73,26 +72,20 @@ function addPhotoToUserProfile(url) {
             console.log("Updated information!");
         }).catch(function(error) {
             console.log("error adding photo url to db");
-
         });
     });
-
 }
-
 
 /**
  * @desc log out current logged in user.
  */
-
 function logout() {
     firebase.auth().signOut().then(function() {
-
             window.location.assign("login.html");
         })
         .catch(function(err) {
             // Handle errors
         });
-
 }
 
 
@@ -104,12 +97,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user.displayName == null) {
         // user not fully registred 
         document.getElementById("validationCustomEmail").value = user.email;
-
     } else {
         // user fully registred 
         window.location.assign("main.html");
     }
-
 });
 
 /**
@@ -129,12 +120,9 @@ firebase.auth().onAuthStateChanged(function(user) {
                     event.stopPropagation();
                     console.log("NOT VALIDATE!")
                     document.getElementById("completeRegistrationButton").disabled = false;
-
-
                 }
 
                 form.classList.add('was-validated');
-
                 if (form.checkValidity() == true && calculateAge(document.getElementById("validationDateOfBirth").value) >= 17) {
                     event.preventDefault();
                     event.stopPropagation();
@@ -146,8 +134,6 @@ firebase.auth().onAuthStateChanged(function(user) {
                     document.getElementById("errorMessage").innerHTML = "Oops! " + "You must be 17 years of age or older to use our service."
                     document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
                 }
-
-
             }, false);
         });
     }, false);
@@ -197,7 +183,6 @@ function saveUserInfo() {
  */
 function calculateAge(dob) {
     let dobSplit = dob.split("/");
-
     let now = new Date(2020, 03, 24);
     let dobNew = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
     console.log(((now - dobNew) / 86400000) / 365);

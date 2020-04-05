@@ -31,8 +31,6 @@ function signUpPressed() {
     window.location.href = "signup.html";
 }
 
-
-
 // CALL INDEX FUNCTIONS HERE
 addHandlerToLoginButton();
 addHandlerToSignUpButton();

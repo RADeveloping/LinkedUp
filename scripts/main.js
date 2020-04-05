@@ -112,15 +112,13 @@ function interested() {
         if (likesArray.includes(uid)) {
             addUserLike();
             Swal.fire(
-                'Matched!',
-                'You have been matched with the user!',
-                'success'
-            )
-
-            /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
+                    'Matched!',
+                    'You have been matched with the user!',
+                    'success'
+                )
+                /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
             currentExternalID = usersArray.pop();
             getNextUserProfile(currentExternalID);
-
             updateChats();
 
         } else {
@@ -143,26 +141,22 @@ function noMoreUsers() {
  * @desc add users like to Firebase
  */
 function addUserLike() {
-    db.collection("users").doc(uid).collection("likes").doc(currentExternalID).set({
-
-        })
+    db.collection("users").doc(uid).collection("likes").doc(currentExternalID).set({})
         .then(function() {
             console.log("Document successfully written!");
+            addUserSeen();
         })
         .catch(function(error) {
             console.error("Error writing document: ", error);
         });
 
-    addUserSeen();
 }
 
 /**
  * @desc add user seen to firebase
  */
 function addUserSeen() {
-    db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({
-
-        })
+    db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({})
         .then(function() {
             console.log("Document successfully written!");
             if (usersArray.length > 0) {
@@ -171,7 +165,6 @@ function addUserSeen() {
             } else {
                 noMoreUsers();
             }
-
         })
         .catch(function(error) {
             console.error("Error writing document: ", error);
@@ -204,7 +197,6 @@ function getNextUserProfile(docID) {
                             likesArray.push(doc.id);
                         }
                     })
-
                 });
         } else {
             noMoreUsers();
@@ -223,12 +215,10 @@ function getNextUserProfile(docID) {
  */
 function calculateAge(dob) {
     let dobSplit = dob.split("/");
-
     let now = new Date(2020, 03, 24);
     let dobNew = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
     console.log(((now - dobNew) / 86400000) / 365);
     return Math.trunc(((now - dobNew) / 86400000) / 365);
-
 }
 
 /**

@@ -66,7 +66,6 @@ function uploadPhotoToFirebase(file, dataUrl) {
 function init() {
     document.getElementById("logoutButton").onclick = logout;
     document.getElementById("validationCustomEmail").readOnly = true;
-
 }
 
 init();
@@ -78,11 +77,11 @@ init();
 
 function logout() {
     firebase.auth().signOut().then(function() {
-
             window.location.assign("login.html");
         })
         .catch(function(err) {
-            // Handle errors
+            // Catch error
+            console.log(err);
         });
 
 }
@@ -91,7 +90,6 @@ function logout() {
  * @desc Check user state.
  */
 firebase.auth().onAuthStateChanged(function(user) {
-
     loadUserInfo(user);
 });
 
@@ -101,7 +99,6 @@ firebase.auth().onAuthStateChanged(function(user) {
  * @param user the current logged in user.
  */
 function loadUserInfo(user) {
-
     let firstName = document.getElementById("validationFirstName")
     let lastName = document.getElementById("validationLastName")
     let dateOfBirth = document.getElementById("validationDateOfBirth")
@@ -154,18 +151,17 @@ function loadUserInfo(user) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
-                    console.log("NOT VALIDATE!")
+                    console.log("NOT VALIDATED!")
                     document.getElementById("completeRegistrationButton").disabled = false;
                 }
 
                 form.classList.add('was-validated');
-
                 if (form.checkValidity() == true) {
                     event.preventDefault();
                     event.stopPropagation();
+                    // Save the user info since fields are validated
                     saveUserInfo();
                 }
-
             }, false);
         });
     }, false);
@@ -189,7 +185,6 @@ function saveUserInfo() {
                 tempPhotoURL = doc.data().photoURL;
             }
 
-            //  userProfileImage.src = a;
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -198,6 +193,7 @@ function saveUserInfo() {
         console.log("Error getting document:", error);
     });
 
+    // Update user profile after saving
     updateProfile(user);
 }
 
@@ -216,7 +212,6 @@ function updateProfile(user) {
             bio: document.getElementById("bioTextBox").value,
             email: user.email,
             photoURL: tempPhotoURL
-
         }).then(function() {
             console.log("Updated information!");
             window.location.assign("main.html");
