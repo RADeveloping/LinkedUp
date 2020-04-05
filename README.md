@@ -46,5 +46,7 @@ See also the list of [contributors](https://github.com/RADeveloping/LinkedUp/con
 * (https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/) - For help with understanding the regex pattern used for validation
 * (https://www.regextester.com/94044) - Validation of the regex
 * (https://www.dropzonejs.com/#usage) - For the uploading user profile photo.
+* (https://sweetalert2.github.io) - Used as an alternative alert.
+
 
 
