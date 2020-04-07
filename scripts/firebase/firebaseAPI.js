@@ -1,11 +1,12 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyAzerA-zdbvh-Thp6UYFn5qKbYc2_za72A",
-    authDomain: "techmini-e3a2a.firebaseapp.com",
-    databaseURL: "https://techmini-e3a2a.firebaseio.com",
-    projectId: "techmini-e3a2a",
-    storageBucket: "techmini-e3a2a.appspot.com",
-    messagingSenderId: "281432190044",
-    appId: "1:281432190044:web:ccdc6f459fdb16cbdcca99"
+    apiKey: "AIzaSyAEZnIL7YOqY0xHIfR402hVwJ0FWv3ATSA",
+    authDomain: "linkedup-f5db2.firebaseapp.com",
+    databaseURL: "https://linkedup-f5db2.firebaseio.com",
+    projectId: "linkedup-f5db2",
+    storageBucket: "linkedup-f5db2.appspot.com",
+    messagingSenderId: "957675612833",
+    appId: "1:957675612833:web:f493f2c3ed606f2c80dee0",
+    measurementId: "G-E16PSFXZL9"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
