@@ -17,32 +17,37 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a href="index.html" class="navbar-brand">Linked Up</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!----------------------------------------------->
+    <!--  NAVIGATION  -->
+    <!----------------------------------------------->
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav">
-                <a href="#" class="nav-item nav-link">About</a>
-                <a href="#" class="nav-item nav-link">Services</a>
-                <a href="#" class="nav-item nav-link">Contact</a>
-            </div>
-            <div class="navbar-nav ml-auto">
-                <a href="#" class="nav-item nav-link">Profile</a>
+    <nav class="navbar navbar-expand bg-light navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger text-black" href="main.html">LINKED UP</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="editProfile.html">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="messageList.html">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#" id="logoutButton">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <ul class="nav nav-tabs" id="messageNavTabs">
-        <li class="nav-item">
-            <a href="messagelist.html" class="nav-link">Back</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">Settings</a>
-        </li>
-    </ul>
+    <!----------------------------------------------->
+    <!--  MAIN CONTAINER CONTAINER -->
+    <!----------------------------------------------->
+
+
 
     <!-- Append messages to "allMessages" div in JavaScript -->
     <!-- Must include all the elements with the class names like in example -->
@@ -72,6 +77,7 @@
     <!-- Firebase Products -->
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-storage.js"></script>
     <!-- Firebase Initialize -->
     <script src="scripts/firebase/firebaseAPI.js"></script>
     <!-- Firebase Authentication State Observer -->
