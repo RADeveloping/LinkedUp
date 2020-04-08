@@ -20,7 +20,11 @@ function createMessages(user) {
     let chatId;
 
     docRef.onSnapshot(function(doc) {
-        numMessages = parseInt(doc.data().id.length);
+
+        if (doc.data()) {
+            numMessages = parseInt(doc.data().id.length);
+            document.getElementById("noMessages").classList.replace("d-block", "d-none");
+        }
 
         for (let i = 0; i < numMessages; i++) {
             chatId = doc.data().id[i];
