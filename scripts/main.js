@@ -86,7 +86,6 @@ function notInterested() {
 
             })
             .then(function() {
-                console.log("Document successfully written!");
                 currentExternalID = usersArray.pop();
                 getNextUserProfile(currentExternalID);
             })
@@ -108,15 +107,12 @@ function notInterested() {
 function interested() {
     if (usersArray.length >= 0) {
         if (likesArray.includes(uid)) {
-            addUserLike();
             Swal.fire(
                     'Matched!',
                     'You have been matched with the user!',
                     'success'
                 )
                 /// USERS HAVE MATCHED CREATE A CONVERSATION BETWEEN THEM!
-            currentExternalID = usersArray.pop();
-            getNextUserProfile(currentExternalID);
             updateChats();
 
         } else {
@@ -141,7 +137,6 @@ function noMoreUsers() {
 function addUserLike() {
     db.collection("users").doc(uid).collection("likes").doc(currentExternalID).set({})
         .then(function() {
-            console.log("Document successfully written!");
             addUserSeen();
         })
         .catch(function(error) {
@@ -156,7 +151,6 @@ function addUserLike() {
 function addUserSeen() {
     db.collection("users").doc(uid).collection("hasSeen").doc(currentExternalID).set({})
         .then(function() {
-            console.log("Document successfully written!");
             if (usersArray.length > 0) {
                 currentExternalID = usersArray.pop();
                 getNextUserProfile(currentExternalID);
@@ -215,7 +209,6 @@ function calculateAge(dob) {
     let dobSplit = dob.split("/");
     let now = new Date(2020, 03, 24);
     let dobNew = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
-    console.log(((now - dobNew) / 86400000) / 365);
     return Math.trunc(((now - dobNew) / 86400000) / 365);
 }
 
@@ -227,7 +220,7 @@ function updateChats() {
     let chatIdRef = chatRef.doc();
     let chatId = chatIdRef.id;
 
-    updateUser(thisUser, chatId);
+    updateUser(thisUser.uid, chatId);
     updateUser(currentExternalID, chatId);
 }
 
@@ -237,7 +230,7 @@ function updateChats() {
  * @param chatId the chat ID for the user.
  */
 function updateUser(user, chatId) {
-    let chatIdRef = db.collection("users").doc(user.uid).collection("chats").doc("chatId");
+    let chatIdRef = db.collection("users").doc(user).collection("chats").doc("chatId");
 
     chatIdRef.get().then(function(doc) {
         if (doc.exists) {
@@ -249,6 +242,9 @@ function updateUser(user, chatId) {
                 id: firebase.firestore.FieldValue.arrayUnion(chatId.toString())
             })
         }
+
+        addUserLike();
+
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
