@@ -66,6 +66,7 @@ function uploadPhotoToFirebase(file, dataUrl) {
 function init() {
     document.getElementById("logoutButton").onclick = logout;
     document.getElementById("validationCustomEmail").readOnly = true;
+
 }
 
 init();
@@ -77,13 +78,8 @@ init();
 
 function logout() {
     firebase.auth().signOut().then(function() {
-            window.location.assign("login.html");
-        })
-        .catch(function(err) {
-            // Catch error
-            console.log(err);
-        });
-
+        window.location.assign("login.html");
+    })
 }
 
 /**
@@ -148,25 +144,38 @@ function loadUserInfo(user) {
         // Loop over them and prevent submission
         let validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
+                if (form.checkValidity() == false || calculateAge(document.getElementById("validationDateOfBirth").value) <= 17 || (typeof tempPhotoURL === "undefined")) {
+
                     event.preventDefault();
                     event.stopPropagation();
-                    console.log("NOT VALIDATED!")
+                    console.log("NOT VALIDATE!")
+                    if (calculateAge(document.getElementById("validationDateOfBirth").value) <= 17) {
+                        alert("Sorry, you must be at least 17 years of age to use this app!")
+                    }
+                    if ((typeof tempPhotoURL === "undefined")) {
+                        alert("You must upload a profile photo! Tap the arrow in the cloud right above the email field!")
+                    }
                     document.getElementById("completeRegistrationButton").disabled = false;
                 }
 
                 form.classList.add('was-validated');
-                if (form.checkValidity() == true) {
+
+                if (form.checkValidity() == true && calculateAge(document.getElementById("validationDateOfBirth").value) >= 17 && (typeof tempPhotoURL !== "undefined")) {
                     event.preventDefault();
                     event.stopPropagation();
-                    // Save the user info since fields are validated
+
                     saveUserInfo();
+                }
+
+                if (calculateAge(document.getElementById("validationDateOfBirth").value) <= 17) {
+                    document.getElementById("errorMessage").classList.replace("d-none", "d-block");
+                    document.getElementById("errorMessage").innerHTML = "Oops! " + "You must be 17 years of age or older to use our service."
+                    document.getElementById("completeRegistrationButton").innerHTML = "Update Profile";
                 }
             }, false);
         });
     }, false);
 })();
-
 /**
  * @desc update user information on firebase
  */
@@ -180,11 +189,9 @@ function saveUserInfo() {
     let docRef = db.collection("users").doc(user.uid)
     docRef.get().then(function(doc) {
         if (doc.exists) {
-
             if (tempPhotoURL == null) {
                 tempPhotoURL = doc.data().photoURL;
             }
-
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -216,15 +223,32 @@ function updateProfile(user) {
             console.log("Updated information!");
             window.location.assign("main.html");
         }).catch(function(error) {
-            console.log("Error updating user user: " + error);
-            document.getElementById("errorMessage").classList.replace("d-none", "d-block");
-            document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
-            document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+            displayErrorMessage();
         });
     }).catch(function(error) {
-
-        document.getElementById("errorMessage").classList.replace("d-none", "d-block");
-        document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
-        document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+        displayErrorMessage();
     });
+}
+
+/**
+ * @desc displays error message in div and re enable button
+ */
+function displayErrorMessage() {
+    document.getElementById("errorMessage").classList.replace("d-none", "d-block");
+    document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
+    document.getElementById("completeRegistrationButton").innerHTML = "Update Profile";
+    document.getElementById("completeRegistrationButton").disabled = false;
+}
+
+/**
+ * @desc calculate a users age based on their dob.
+ * @param dob the date of birth of the user.
+ * @returns int the age of the user.
+ */
+function calculateAge(dob) {
+    let dobSplit = dob.split("/");
+    let now = new Date(2020, 03, 24);
+    let dobNew = new Date(parseInt(dobSplit[2]), dobSplit[1], dobSplit[0]);
+    console.log(((now - dobNew) / 86400000) / 365);
+    return Math.trunc(((now - dobNew) / 86400000) / 365);
 }

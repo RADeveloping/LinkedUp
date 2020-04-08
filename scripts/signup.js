@@ -2,6 +2,9 @@ let profilePhotoFile;
 let profilePhotoDataUrl;
 let URLtoUpload;
 
+// 
+// HELPER TO PROCESS IMAGE UPLOADS.
+//
 let myDropzone = new Dropzone("div#photoupload", {
     url: "/file/post",
     paramName: "file", // The name that will be used to transfer the file
@@ -81,11 +84,8 @@ function addPhotoToUserProfile(url) {
  */
 function logout() {
     firebase.auth().signOut().then(function() {
-            window.location.assign("login.html");
-        })
-        .catch(function(err) {
-            // Handle errors
-        });
+        window.location.assign("login.html");
+    })
 }
 
 
@@ -97,6 +97,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user.displayName == null) {
         // user not fully registred 
         document.getElementById("validationCustomEmail").value = user.email;
+        document.getElementById("validationCustomEmail").readOnly = true;
     } else {
         // user fully registred 
         window.location.assign("main.html");
@@ -115,7 +116,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         // Loop over them and prevent submission
         let validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false || calculateAge(document.getElementById("validationDateOfBirth").value) <= 17) {
+                if (form.checkValidity() == false || calculateAge(document.getElementById("validationDateOfBirth").value) <= 17 || (typeof URLtoUpload === "undefined")) {
+
                     event.preventDefault();
                     event.stopPropagation();
                     console.log("NOT VALIDATE!")
@@ -123,9 +125,11 @@ firebase.auth().onAuthStateChanged(function(user) {
                 }
 
                 form.classList.add('was-validated');
-                if (form.checkValidity() == true && calculateAge(document.getElementById("validationDateOfBirth").value) >= 17) {
+
+                if (form.checkValidity() == true && calculateAge(document.getElementById("validationDateOfBirth").value) >= 17 && (typeof URLtoUpload !== "undefined")) {
                     event.preventDefault();
                     event.stopPropagation();
+
                     saveUserInfo();
                 }
 
@@ -134,11 +138,16 @@ firebase.auth().onAuthStateChanged(function(user) {
                     document.getElementById("errorMessage").innerHTML = "Oops! " + "You must be 17 years of age or older to use our service."
                     document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
                 }
+
+                if ((typeof URLtoUpload === "undefined")) {
+                    document.getElementById("errorMessage").classList.replace("d-none", "d-block");
+                    document.getElementById("errorMessage").innerHTML = "Oops! " + "You must upload a profile photo! Tap the arrow button above the email field."
+                    document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+                }
             }, false);
         });
     }, false);
 })();
-
 
 /**
  * @desc save user information to Firestore
@@ -164,16 +173,22 @@ function saveUserInfo() {
             window.location.assign("main.html");
         }).catch(function(error) {
             console.log("Error updating user user: " + error);
-            document.getElementById("errorMessage").classList.replace("d-none", "d-block");
-            document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
-            document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+            displayErrorMessage();
         });
     }).catch(function(error) {
         // An error happened.
-        document.getElementById("errorMessage").classList.replace("d-none", "d-block");
-        document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
-        document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+        displayErrorMessage();
     });
+}
+
+/**
+ * @desc displays error message in div and re enable button
+ */
+function displayErrorMessage() {
+    document.getElementById("errorMessage").classList.replace("d-none", "d-block");
+    document.getElementById("errorMessage").innerHTML = "Oops! " + error.message
+    document.getElementById("completeRegistrationButton").innerHTML = "Complete Registration";
+    document.getElementById("completeRegistrationButton").disabled = false;
 }
 
 /**

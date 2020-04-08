@@ -9,6 +9,10 @@ let list = [];
 // HTML DOM Methods     //
 //======================//
 
+/**
+ * @desc creates the message for the user.
+ * @param user the current logged in user.
+ */
 function createMessages(user) {
     let promises = [];
     let numMessages = 0;
@@ -35,6 +39,9 @@ function createMessages(user) {
     })
 }
 
+/**
+ * @desc creates the HTML elements for the chat
+ */
 function createElements() {
     elements[0] = document.createElement("div");
     elements[1] = document.createElement("div");
@@ -44,6 +51,10 @@ function createElements() {
     elements[5] = document.createElement("p");
 }
 
+/**
+ * @desc set the attributes for the chat.
+ * @param chatId the chat id for this element.
+ */
 function setAttributes(chatId) {
     elements[0].setAttribute("class", "row align-items-center py-1");
     elements[0].style.cursor = "pointer";
@@ -56,6 +67,11 @@ function setAttributes(chatId) {
     elements[5].setAttribute("class", "preview");
 }
 
+/**
+ * @desc set the values for the messages.
+ * @param user the current user
+ * @param chatId the chat ID for this message
+ */
 function setValues(user, chatId) {
     let docRef = db.collection("users").doc(user.uid);
 
@@ -71,6 +87,10 @@ function setValues(user, chatId) {
     elements[5].innerHTML = "Preview message."
 }
 
+/**
+ * @desc appends the message elements to the bodys
+ * @param promisedElements the promissed elements
+ */
 function appendElements(promisedElements) {
     elements[1].appendChild(elements[2]);
     elements[3].appendChild(elements[4]);
@@ -81,7 +101,10 @@ function appendElements(promisedElements) {
 
     document.getElementById("messageListItems").appendChild(elements[0]);
 }
-
+/**
+ * @desc opens a message
+ * @param chatId the chat id for this message.
+ */
 function messageClick(chatId) {
     localStorage.setItem("chatId", chatId);
     window.open("messageUser.html", "_self");
@@ -94,10 +117,32 @@ function messageClick(chatId) {
 // Functions            //
 //======================//
 
+/**
+ * @desc check if current user is signed in
+ * @param user current logged in user
+ */
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         createMessages(user);
     } else {
-        alert("You're not logged in!");
+        window.location.assign("login.html");
     }
 })
+
+/**
+ * @desc adds onClick to the logout button
+ */
+function addOnClick() {
+    document.getElementById("logoutButton").onclick = logout;
+}
+
+/**
+ * @desc log out current logged in user.
+ */
+function logout() {
+    firebase.auth().signOut().then(function() {
+        window.location.assign("login.html");
+    })
+}
+
+addOnClick();

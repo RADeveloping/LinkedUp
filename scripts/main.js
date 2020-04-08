@@ -25,12 +25,8 @@ init();
 
 function logout() {
     firebase.auth().signOut().then(function() {
-
-            window.location.assign("login.html");
-        })
-        .catch(function(err) {
-            alert(err);
-        });
+        window.location.assign("login.html");
+    })
 }
 
 /**
@@ -67,10 +63,12 @@ firebase.auth().onAuthStateChanged(function(user) {
                 getNextUserProfile(currentExternalID);
             })
             .catch(function(error) {
-                console.log("Error getting documents: ", error);
+
                 noMoreUsers();
 
             });
+    } else {
+        window.location.assign("login.html");
     }
 });
 
