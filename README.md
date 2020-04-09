@@ -90,6 +90,9 @@ Firebase hosting files:
 ├── firestore.rules          # Rules for read/write to firestore
 
 ```
+Tips for file naming:
+user lowercase with no spaces
+use dashes (not underscore) for word separation
 
 ## Authors
 
