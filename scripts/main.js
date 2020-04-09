@@ -178,7 +178,7 @@ function getNextUserProfile(docID) {
             if (doc.data().photoURL) {
                 document.getElementById("userimage").src = doc.data().photoURL;
             } else {
-                document.getElementById("userimage").src = "images/main/placeholderimage.jpg";
+                document.getElementById("userimage").src = "images/placeholderimage.jpg";
             }
 
             likesArray = [];
@@ -240,7 +240,7 @@ function updateUser(user, chatId, userNum) {
         if (doc.exists) {
             doc.set({
                 userNum: user
-            })  
+            })
 
             chatIdRef.update({
                 id: firebase.firestore.FieldValue.arrayUnion(chatId.toString())
