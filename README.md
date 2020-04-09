@@ -49,36 +49,42 @@ It has the following subfolders:
 ├── .firebase                # Folder for firebase
 ├── .git                     # Folder for git repo
 ├── css                      # Folder for css files
-    /createprofile.css/editprofile.css
-    /landing/creative.css
-    /landing/creative.min.css
-    /login.css
-    /main.css
-    /messagelist.css
-    /messageuser.css
+    ├── landing              # Folder for landing page stylesheets
+        /creative.css        # Used for the styling of landing page
+        /creative.min.css    # Used for the styling of the landing page
+    /createprofile.css       # Used for the styling of the create profile page
+    /editprofile.css         # Used for the styling of the edit profile page
+    /login.css               # Used for the styling of the login page
+    /main.css                # Used for the styling of the main page
+    /messagelist.css         # Used for the styling of the messages page
+    /messageuser.css         # Used for the styling of the direct messaging page
 ├── images                   # Folder for images
     /logo.svg                # Used for the logo of the site.
     /upload.png              # Used for the upload button of create and edit profile page.
     /placeholderimage.jpg    # Used as a placeholder image if user image is not found.
 ├── scripts                  # Folder for scripts
-    /Landing/creative.js     # used for landing page external function
-    /Landing/creative.min.js # used for landing page external function
-    /dropzone/dropzone.js    # used for uploading image external function
+    ├── landing              # Folder for landing page stylesheets
+        /creative.js         # used for landing page external function
+        /creative.min.js     # used for landing page external function
+    ├── dropzone             # folder for uploading photo js functions
+        /dropzone.js         # used for uploading image external function
+    ├── firebase             # folder for uploading firebase scripts
+        /firebaseAPI.js      # used for to keep the firebase api for messages page
+    ├── sweetAlert           # folder for holding the sweetAlert scripts
+        /sweetalert2.all.min.js # used for the sweet alert js external functions
     /editprofile.js          # used for editing profile page js function
-    /firebase/firebaseAPI.js # used for to keep the firebase api for messages page
     /login.js                # used for the login page js function
     /main.js                 # used for main page js function
     /messagelist.js          # used for the message page js function
     /messageuser.js          # used for the direct message page js function
     /signup.js               # used for the sign up message page js function
-    /sweetAlert/sweetalert2.all.min.js # used for the sweet alert js function
 ├── vendor                  # Folder for external vendor scripts used.
+
 Firebase hosting files: 
 ├── .firebaserc              # Firebase file
 ├── firebase.json            # Firebase file
 ├── firestore.indexes.json   # Firebase file
 ├── firestore.rules          # Rules for read/write to firestore
-
 
 ```
 
