@@ -10,7 +10,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 email: user.email
             }).then(function() {
                 console.log("New user added to firestore");
-                window.location.assign("createProfile.html");
+                window.location.assign("createprofile.html");
             }).catch(function(error) {
                 console.log("Error adding new user: " + error);
             });
