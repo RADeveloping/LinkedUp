@@ -30,6 +30,58 @@ Some other technologies that were used for this project:
 - HTML, CSS
 - JavaScript
 
+## Content
+Content of the project folder:
+
+```
+ Top level of project folder: 
+├── .gitignore               # Git ignore file
+├── createprofile.html       # create profile HTML file, this is what is used to create a user profile
+├── editprofile.html         # edit profile HTML file, this is what users see when they want to edit their profile
+├── index.html               # index HTML file, main landing page for the app
+├── login.html               # login HTML file, used to loging and register a user
+├── main.html                # main HTML file, shown after logs in, displays other potential users to match with. 
+├── messagelist.html         # messageList HTML file, used to show the current matches of the user/direct messages. 
+├── messageuser.html         # messageUser HTML file, used to send message to another user. 
+└── README.md
+
+It has the following subfolders:
+├── .firebase                # Folder for firebase
+├── .git                     # Folder for git repo
+├── css                      # Folder for css files
+    /createprofile.css/editprofile.css
+    /landing/creative.css
+    /landing/creative.min.css
+    /login.css
+    /main.css
+    /messagelist.css
+    /messageuser.css
+├── images                   # Folder for images
+    /logo.svg                # Used for the logo of the site.
+    /upload.png              # Used for the upload button of create and edit profile page.
+    /placeholderimage.jpg    # Used as a placeholder image if user image is not found.
+├── scripts                  # Folder for scripts
+    /Landing/creative.js     # used for landing page external function
+    /Landing/creative.min.js # used for landing page external function
+    /dropzone/dropzone.js    # used for uploading image external function
+    /editprofile.js          # used for editing profile page js function
+    /firebase/firebaseAPI.js # used for to keep the firebase api for messages page
+    /login.js                # used for the login page js function
+    /main.js                 # used for main page js function
+    /messagelist.js          # used for the message page js function
+    /messageuser.js          # used for the direct message page js function
+    /signup.js               # used for the sign up message page js function
+    /sweetAlert/sweetalert2.all.min.js # used for the sweet alert js function
+├── vendor                  # Folder for external vendor scripts used.
+Firebase hosting files: 
+├── .firebaserc              # Firebase file
+├── firebase.json            # Firebase file
+├── firestore.indexes.json   # Firebase file
+├── firestore.rules          # Rules for read/write to firestore
+
+
+```
+
 ## Authors
 
 * **Rahim Askarzadeh** - [RADeveloping](https://github.com/RADeveloping)
