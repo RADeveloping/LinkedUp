@@ -49,15 +49,15 @@ It has the following subfolders:
 ├── .firebase                # Folder for firebase
 ├── .git                     # Folder for git repo
 ├── css                      # Folder for css files
-    ├── landing              # Folder for landing page stylesheets
-        /creative.css        # Used for the styling of landing page
-        /creative.min.css    # Used for the styling of the landing page
     /createprofile.css       # Used for the styling of the create profile page
     /editprofile.css         # Used for the styling of the edit profile page
     /login.css               # Used for the styling of the login page
     /main.css                # Used for the styling of the main page
     /messagelist.css         # Used for the styling of the messages page
     /messageuser.css         # Used for the styling of the direct messaging page
+    ├── landing              # Folder for landing page stylesheets
+        /creative.css        # Used for the styling of landing page
+        /creative.min.css    # Used for the styling of the landing page
 
 ├── images                   # Folder for images
     /logo.svg                # Used for the logo of the site.
@@ -65,6 +65,12 @@ It has the following subfolders:
     /placeholderimage.jpg    # Used as a placeholder image if user image is not found.
 
 ├── scripts                  # Folder for scripts
+    /editprofile.js          # used for editing profile page js function
+    /login.js                # used for the login page js function
+    /main.js                 # used for main page js function
+    /messagelist.js          # used for the message page js function
+    /messageuser.js          # used for the direct message page js function
+    /signup.js               # used for the sign up message page js function
     ├── landing              # Folder for landing page stylesheets
         /creative.js         # used for landing page external function
         /creative.min.js     # used for landing page external function
@@ -74,12 +80,6 @@ It has the following subfolders:
         /firebaseAPI.js      # used for to keep the firebase api for messages page
     ├── sweetAlert           # folder for holding the sweetAlert scripts
         /sweetalert2.all.min.js # used for the sweet alert js external functions
-    /editprofile.js          # used for editing profile page js function
-    /login.js                # used for the login page js function
-    /main.js                 # used for main page js function
-    /messagelist.js          # used for the message page js function
-    /messageuser.js          # used for the direct message page js function
-    /signup.js               # used for the sign up message page js function
 
 ├── vendor                  # Folder for external vendor scripts used.
 
@@ -108,6 +108,4 @@ See also the list of [contributors](https://github.com/RADeveloping/LinkedUp/con
 * (https://www.regextester.com/94044) - Validation of the regex
 * (https://www.dropzonejs.com/#usage) - For the uploading user profile photo.
 * (https://sweetalert2.github.io) - Used as an alternative alert.
-
-
-
+* (https://github.com/orrbcit) - Carly Orr for her outstanding support and mentorship.
