@@ -58,10 +58,12 @@ It has the following subfolders:
     /main.css                # Used for the styling of the main page
     /messagelist.css         # Used for the styling of the messages page
     /messageuser.css         # Used for the styling of the direct messaging page
+
 ├── images                   # Folder for images
     /logo.svg                # Used for the logo of the site.
     /upload.png              # Used for the upload button of create and edit profile page.
     /placeholderimage.jpg    # Used as a placeholder image if user image is not found.
+
 ├── scripts                  # Folder for scripts
     ├── landing              # Folder for landing page stylesheets
         /creative.js         # used for landing page external function
@@ -78,6 +80,7 @@ It has the following subfolders:
     /messagelist.js          # used for the message page js function
     /messageuser.js          # used for the direct message page js function
     /signup.js               # used for the sign up message page js function
+
 ├── vendor                  # Folder for external vendor scripts used.
 
 Firebase hosting files: 
