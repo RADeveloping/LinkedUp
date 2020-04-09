@@ -66,6 +66,7 @@ function setElementAttributes() {
 
 /**
  * @desc sets the element attributes for the divs.
+ * @param user current logged in user
  */
 function setElementValues(user) {
     let userName = user.displayName;

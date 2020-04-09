@@ -220,20 +220,28 @@ function updateChats() {
     let chatIdRef = chatRef.doc();
     let chatId = chatIdRef.id;
 
-    updateUser(thisUser.uid, chatId);
-    updateUser(currentExternalID, chatId);
+    const user1 = 1;
+    const user2 = 2;
+
+    updateUser(thisUser.uid, chatId, user1);
+    updateUser(currentExternalID, chatId, user2);
 }
 
 /**
  * @desc Update the user and their chat id
  * @param user the user currently logged in
  * @param chatId the chat ID for the user.
+ * @param userNum the user to set
  */
-function updateUser(user, chatId) {
+function updateUser(user, chatId, userNum) {
     let chatIdRef = db.collection("users").doc(user).collection("chats").doc("chatId");
 
     chatIdRef.get().then(function(doc) {
         if (doc.exists) {
+            doc.set({
+                userNum: user
+            })  
+
             chatIdRef.update({
                 id: firebase.firestore.FieldValue.arrayUnion(chatId.toString())
             })
