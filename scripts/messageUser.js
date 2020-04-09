@@ -13,7 +13,7 @@ const MONTH = [
 //======================//
 
 let elements;
-let chatId;
+let chatId = localStorage.get("chatId");
 
 //======================//
 // Button Event         //
